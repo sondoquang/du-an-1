@@ -7,11 +7,16 @@ import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 
 
 
@@ -160,4 +165,49 @@ public final class XTable {
             return label;
         }
     }
+    
+    
+    // Set checkBox cho cột(column) trong JTable //
+    public static class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
+
+        public CheckBoxRenderer() {
+            setHorizontalAlignment(JLabel.CENTER);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            // Cập nhật trạng thái của JCheckBox
+            setSelected((Boolean) value);
+            // Tùy chỉnh màu sắc nền nếu ô được chọn
+            if (isSelected) {
+                setForeground(new Color(15, 89, 140));
+                setBackground(new Color(204, 204, 204));
+            } else {
+                setForeground(Color.decode("#000000"));
+            }
+            return this;
+        }
+    }
+    
+    public static class checkBoxEditor extends AbstractCellEditor implements TableCellEditor{
+        private JCheckBox checkBox;
+        public checkBoxEditor(){
+            checkBox = new JCheckBox();
+            checkBox.setHorizontalAlignment(JCheckBox.CENTER);
+            checkBox.setHorizontalTextPosition(JCheckBox.CENTER);
+            checkBox.setVerticalAlignment(JCheckBox.CENTER);
+            checkBox.setVerticalTextPosition(JCheckBox.CENTER);
+        }
+        @Override
+        public Object getCellEditorValue() {
+            return checkBox.isSelected();
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            checkBox.setSelected((boolean) value);
+            return checkBox;
+        }
+        
+    } 
 }

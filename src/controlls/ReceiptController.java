@@ -9,13 +9,18 @@ import entities.HoaDon;
 import entities.HoaDonChiTiet;
 import entities.KhachHang;
 import entities.SanPham;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import utils.XMsgBox;
+import utils.XTable;
 
 public class ReceiptController {
 
@@ -29,6 +34,8 @@ public class ReceiptController {
     public static JTable tblCTHoaDon;
     public static JTextField txtTimHD;
     public static JComboBox cboTime;
+    
+    public static Set<Integer> historyClick = new LinkedHashSet<>();
 
     public static void initialize(JFrame frame, JTable tblHoaDon, JTable tblCTHoaDon, JTextField txtTimHD, JComboBox cboTime) {
         ReceiptController.frame = frame;
@@ -48,6 +55,9 @@ public class ReceiptController {
 
     public static void init() {
         fillTableBills();
+        TableColumnModel columnModel = tblHoaDon.getColumnModel();
+        columnModel.getColumn(6).setCellRenderer(new XTable.CheckBoxRenderer());
+        columnModel.getColumn(6).setCellEditor(new XTable.checkBoxEditor());
     }
 
     public static void search() {
@@ -67,7 +77,7 @@ public class ReceiptController {
                     hd.getTriGia(),
                     hd.getGiamGia(),
                     hd.getNgayMua(),
-                    hd.getTrangThai()
+                    hd.getTrangThai().equals("Đã thanh toán")?true:false
                 };
                 model.addRow(row);
             }
@@ -75,7 +85,7 @@ public class ReceiptController {
             XMsgBox.alert(frame, "Lỗi truy vấn dữ liệu !!");
         }
     }
-
+    
     public static void fillDetailBills() {
         DefaultTableModel model = (DefaultTableModel) tblCTHoaDon.getModel();
         DefaultTableModel model1 = (DefaultTableModel) tblHoaDon.getModel();
@@ -97,7 +107,24 @@ public class ReceiptController {
             XMsgBox.alert(frame, "Lỗi truy vấn dữ liệu !!");
         }
     }
-
+    
+    public static Set<Integer> doClickTable(){
+        historyClick.add(tblHoaDon.getSelectedRow());
+        return historyClick;
+    }
+    
+    public static void updateTrangThaiHD(){
+        DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
+        for(Integer setHis : historyClick){
+            HoaDon hd = new HoaDon();
+            hd.setMaHD(model.getValueAt(setHis, 0)+"");
+            hd.setTrangThai(((boolean)model.getValueAt(setHis, 6))?"Đã thanh toán":"Chưa thanh toán");
+            hddao.updateTrangThaiHD(hd);
+        }
+        historyClick.clear();
+        fillTableBills();
+    }
+    
     public static void fillTableBills() {
         DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
         List<HoaDon> list = null;
@@ -123,7 +150,7 @@ public class ReceiptController {
                     hd.getTriGia(),
                     hd.getGiamGia(),
                     hd.getNgayMua(),
-                    hd.getTrangThai()
+                    hd.getTrangThai().equals("Đã thanh toán") == true?true:false
                 };
                 model.addRow(row);
             }

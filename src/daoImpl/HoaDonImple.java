@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.XMsgBox;
 
 public class HoaDonImple implements HoaDonDAO {
 
@@ -134,6 +135,20 @@ public class HoaDonImple implements HoaDonDAO {
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    public HoaDon updateTrangThaiHD(HoaDon Entity) {
+        try {
+            String sql = "Update HoaDon set TrangThai = ? where maHD = ? ";
+            Object[] value = {
+                Entity.getTrangThai(),
+                Entity.getMaHD()
+            };
+            XJdbc.IUD(sql, value);
+        } catch (Exception e) {
+            XMsgBox.alert(null, "Lỗi truy vấn dữ liệu !");
+        }
+        return Entity;
     }
 
 }

@@ -341,6 +341,7 @@ public class MainPageFrame extends javax.swing.JFrame {
         cboTime = new javax.swing.JComboBox<>();
         btnTaoDH = new button.ButtonCustom();
         jLabel47 = new javax.swing.JLabel();
+        buttonCustom1 = new button.ButtonCustom();
         jScrollPane8 = new javax.swing.JScrollPane();
         tblCTHoaDon = new customjtable.CustomJTable();
         jScrollPane9 = new javax.swing.JScrollPane();
@@ -1781,6 +1782,15 @@ public class MainPageFrame extends javax.swing.JFrame {
         jLabel47.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel47.setText("Quản Lý Hóa Đơn");
 
+        buttonCustom1.setText("Cập nhật");
+        buttonCustom1.setBorderColor(new java.awt.Color(0, 204, 204));
+        buttonCustom1.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        buttonCustom1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCustom1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlTimHDLayout = new javax.swing.GroupLayout(pnlTimHD);
         pnlTimHD.setLayout(pnlTimHDLayout);
         pnlTimHDLayout.setHorizontalGroup(
@@ -1796,8 +1806,10 @@ public class MainPageFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cboTime, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 622, Short.MAX_VALUE)
+                        .addComponent(cboTime, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 502, Short.MAX_VALUE)
                 .addComponent(btnTaoDH, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
         );
@@ -1815,8 +1827,9 @@ public class MainPageFrame extends javax.swing.JFrame {
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtTimHD, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(buttonCustom1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cboTime))
-                        .addGap(6, 6, 6)))
+                        .addGap(5, 5, 5)))
                 .addContainerGap())
         );
 
@@ -1858,9 +1871,16 @@ public class MainPageFrame extends javax.swing.JFrame {
                 "MÃ HD", "KHÁCH HÀNG", "NHÂN VIÊN", "TỔNG TIỀN", "GIẢM GIÁ", "NGÀY", "TRẠNG THÁI"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -2604,6 +2624,9 @@ public class MainPageFrame extends javax.swing.JFrame {
             runController(() -> {
                 ReceiptController.fillDetailBills();
             });
+            runController(() -> {
+                ReceiptController.doClickTable();
+            });
         } else {
             DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
             String mahd = model.getValueAt(tblHoaDon.getSelectedRow(), 0) + "";
@@ -2755,6 +2778,12 @@ public class MainPageFrame extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_btnsua_SPActionPerformed
 
+    private void buttonCustom1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCustom1ActionPerformed
+        runController(() -> {
+            ReceiptController.updateTrangThaiHD();
+        });
+    }//GEN-LAST:event_buttonCustom1ActionPerformed
+
     private void exit() {
         boolean res = XMsgBox.confirm(this, "Chắc chắn muốn thoát ?");
         if (res) {
@@ -2904,6 +2933,7 @@ public class MainPageFrame extends javax.swing.JFrame {
     private javax.swing.JButton btndatlai_SP;
     private javax.swing.JButton btnsua_SP;
     private javax.swing.JButton btnthem_SP;
+    private button.ButtonCustom buttonCustom1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
