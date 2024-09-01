@@ -68,7 +68,6 @@ public class MainPageFrame extends javax.swing.JFrame {
         this.setTitle("Quản Lý Bán Nước");
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-    
 
     private void setUser() {
         File file = new File("EmpImages", XAuth.getUser().getHinh());
@@ -96,7 +95,7 @@ public class MainPageFrame extends javax.swing.JFrame {
         HomeController.initialize(this, homeEmpPic, homeEmpName, homeProdPic, homeProdName, homeLblSum);
         ClientController.initialize(this, tblClient, txtMaKH, txtTenClient, txtSDTClient, btnCreateClient, btnUpdateClient, btnDeleteClient);
         EmployeeController.initialize(this, tblNhanVien, txtManv, txtHoVaTenNV, txtmatkhauNV, rdoCvAdmin, rdoCvBan, rdoCvKho, rdoNvNam, rdoNvNu, buttonGroup2, buttonGroup3, txtnamsinh_NV, txtsodienthoai_NV, txtemail_NV, txtdiachi_NV, lblhinhNV, btncapnhatNV, btnThemNv, btndatlaiNv, btnXoaNV);
-        ApplianceController.initialize(this, tblNL_SP, txtmasp_KH, txtTSP_KH, txtDonVI_SP, txtGT_SP, txtTKHo_SP, txtTThieu_SP, lblhinh_SP, btndatlai_SP, btnthem_SP, btnsua_SP,txtSLDatThem,btnThemNL,txtGhiChu);
+        ApplianceController.initialize(this, tblNL_SP, txtmasp_KH, txtTSP_KH, txtDonVI_SP, txtGT_SP, txtTKHo_SP, txtTThieu_SP, lblhinh_SP, btndatlai_SP, btnthem_SP, btnsua_SP, txtSLDatThem, btnThemNL, txtGhiChu);
         ReceiptController.initialize(this, tblHoaDon, tblCTHoaDon, txtTimHD, cboTime);
         ProfileController.initialize(this, txtMaNV, txtMatKhau, txtHoTen, Prof_txtMaCV, Prof_txtNgaySinh, Prof_rdoNam, Prof_rdoNu, Prof_txtSDT, Prof_txtEmail, Prof_txtDiaChi, Prof_lblHinh);
         ProductController.initialize(this, tblSanPham);
@@ -106,7 +105,7 @@ public class MainPageFrame extends javax.swing.JFrame {
         HomeController.getComponents(this, homeEmpPic, homeEmpName, homeProdPic, homeProdName, homeLblSum);
         ClientController.getComponents(this, tblClient, txtMaKH, txtTenClient, txtSDTClient, btnCreateClient, btnUpdateClient, btnDeleteClient);
         EmployeeController.getComponents(this, tblNhanVien, txtManv, txtHoVaTenNV, txtmatkhauNV, rdoCvAdmin, rdoCvBan, rdoCvKho, rdoNvNam, rdoNvNu, buttonGroup2, buttonGroup3, txtnamsinh_NV, txtsodienthoai_NV, txtemail_NV, txtdiachi_NV, lblhinhNV, btncapnhatNV, btnThemNv, btndatlaiNv, btnXoaNV);
-        ApplianceController.getComponents(this, tblNL_SP, txtmasp_KH, txtTSP_KH, txtDonVI_SP, txtGT_SP, txtTKHo_SP, txtTThieu_SP, lblhinh_SP, btndatlai_SP, btnthem_SP, btnsua_SP,txtSLDatThem,btnThemNL,txtGhiChu);
+        ApplianceController.getComponents(this, tblNL_SP, txtmasp_KH, txtTSP_KH, txtDonVI_SP, txtGT_SP, txtTKHo_SP, txtTThieu_SP, lblhinh_SP, btndatlai_SP, btnthem_SP, btnsua_SP, txtSLDatThem, btnThemNL, txtGhiChu);
         ReceiptController.getComponents(this, tblHoaDon, tblCTHoaDon, txtTimHD, cboTime);
         ProfileController.getComponents(this, txtMaNV, txtMatKhau, txtHoTen, Prof_txtMaCV, Prof_txtNgaySinh, Prof_rdoNam, Prof_rdoNu, Prof_txtSDT, Prof_txtEmail, Prof_txtDiaChi, Prof_lblHinh);
         ProductController.getComponents(this, tblSanPham);
@@ -2499,7 +2498,7 @@ public class MainPageFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-       
+
     }//GEN-LAST:event_formWindowClosing
 
     private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
@@ -2562,13 +2561,13 @@ public class MainPageFrame extends javax.swing.JFrame {
             EmployeeController.insert();
         });
     }//GEN-LAST:event_btnThemNvActionPerformed
-    
+
     private void btnthem_SPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthem_SPActionPerformed
         HoaDonNhapImple hdndao = new HoaDonNhapImple();
         String maHDN = hdndao.createIdHDNhap();
         runController(() -> {
             ApplianceController.insertAdd(maHDN);
-            
+
         });
     }//GEN-LAST:event_btnthem_SPActionPerformed
 
@@ -2678,7 +2677,7 @@ public class MainPageFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
     private void btnTaoSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoSPActionPerformed
-        if(!XAuth.isAdmin()){
+        if (!XAuth.isAdmin()) {
             return;
         }
         runController(() -> {
@@ -2734,18 +2733,18 @@ public class MainPageFrame extends javax.swing.JFrame {
 
     private void btnThemNLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNLActionPerformed
         HoaDonNhapImple hdndao = new HoaDonNhapImple();
-        String maHDN = hdndao.createIdHDNhap();        
+        String maHDN = hdndao.createIdHDNhap();
         runController(() -> {
             ApplianceController.insert(maHDN);
         });
     }//GEN-LAST:event_btnThemNLActionPerformed
 
     private void btnBieuDoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBieuDoActionPerformed
-        new ChartJDialog(this, true).setVisible(true );
+        new ChartJDialog(this, true).setVisible(true);
     }//GEN-LAST:event_btnBieuDoActionPerformed
 
     private void btnInhoadonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInhoadonActionPerformed
-        runController(() ->{
+        runController(() -> {
             ApplianceController.inHoaDon();
         });
     }//GEN-LAST:event_btnInhoadonActionPerformed
@@ -3064,5 +3063,5 @@ public class MainPageFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtnamsinh_NV;
     private javax.swing.JTextField txtsodienthoai_NV;
     // End of variables declaration//GEN-END:variables
-
+    
 }

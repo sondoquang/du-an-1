@@ -58,9 +58,13 @@ public class NguyenLieuImple extends NguyenLieuDao{
         return XJdbc.getValue(sql, maNL);
     }
 
-    public void updateTKNguyenLieu(Object...values) {
+    public void updateTKNguyenLieu(NguyenLieu Entity) {
         String sql = " UPDATE NGUYENLIEU SET TONKHO = TONKHO - ? WHERE MANL = ?";
         try {
+            Object [] values ={
+                Entity.getTonKho(),
+                Entity.getMaNL()
+            };
             XJdbc.IUD(sql, values);
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(NguyenLieuDao.class.getName()).log(Level.SEVERE, null, ex);

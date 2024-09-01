@@ -23,4 +23,5 @@ public interface BanHangController {
      jpanelrounded.PanelRound createPanelProduct();
      JLabel createLabelProduct();
      void fillTableOrder();
+     void updateNguyenLieu(String maSP, int heSo);
 }
