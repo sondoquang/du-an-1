@@ -412,11 +412,11 @@ public class MainPageFrame extends javax.swing.JFrame {
 
         jPanel12.setOpaque(false);
 
-        lblDate.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblDate.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         lblDate.setForeground(new java.awt.Color(255, 255, 255));
         lblDate.setText("Day");
 
-        lblTime.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblTime.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         lblTime.setForeground(new java.awt.Color(255, 255, 255));
         lblTime.setText("Time");
 
@@ -451,7 +451,7 @@ public class MainPageFrame extends javax.swing.JFrame {
             }
         });
 
-        side_lblUser.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        side_lblUser.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         side_lblUser.setForeground(new java.awt.Color(255, 255, 255));
         side_lblUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         side_lblUser.setText("User");
@@ -498,11 +498,11 @@ public class MainPageFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/home.png"))); // NOI18N
-        jLabel4.setText("Trang chủ");
+        jLabel4.setText(" Trang chủ");
 
         javax.swing.GroupLayout btnHomeLayout = new javax.swing.GroupLayout(btnHome);
         btnHome.setLayout(btnHomeLayout);
@@ -514,7 +514,7 @@ public class MainPageFrame extends javax.swing.JFrame {
         );
         btnHomeLayout.setVerticalGroup(
             btnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
 
         sideNav.add(btnHome);
@@ -533,11 +533,11 @@ public class MainPageFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/job.png"))); // NOI18N
-        jLabel5.setText("Nhân viên");
+        jLabel5.setText(" Nhân viên");
 
         javax.swing.GroupLayout btnEmployeeLayout = new javax.swing.GroupLayout(btnEmployee);
         btnEmployee.setLayout(btnEmployeeLayout);
@@ -549,7 +549,7 @@ public class MainPageFrame extends javax.swing.JFrame {
         );
         btnEmployeeLayout.setVerticalGroup(
             btnEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
 
         sideNav.add(btnEmployee);
@@ -568,11 +568,11 @@ public class MainPageFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/KhachHang.png"))); // NOI18N
-        jLabel6.setText("Khách hàng");
+        jLabel6.setText(" Khách hàng");
 
         javax.swing.GroupLayout btnClientLayout = new javax.swing.GroupLayout(btnClient);
         btnClient.setLayout(btnClientLayout);
@@ -584,7 +584,7 @@ public class MainPageFrame extends javax.swing.JFrame {
         );
         btnClientLayout.setVerticalGroup(
             btnClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
 
         sideNav.add(btnClient);
@@ -603,11 +603,11 @@ public class MainPageFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/SanPham.png"))); // NOI18N
-        jLabel7.setText("Sản phẩm");
+        jLabel7.setText(" Sản phẩm");
 
         javax.swing.GroupLayout btnProductLayout = new javax.swing.GroupLayout(btnProduct);
         btnProduct.setLayout(btnProductLayout);
@@ -619,7 +619,7 @@ public class MainPageFrame extends javax.swing.JFrame {
         );
         btnProductLayout.setVerticalGroup(
             btnProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
 
         sideNav.add(btnProduct);
@@ -638,11 +638,11 @@ public class MainPageFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/VatTu.png"))); // NOI18N
-        jLabel8.setText("Kho hàng");
+        jLabel8.setText(" Kho hàng");
 
         javax.swing.GroupLayout btnApplianceLayout = new javax.swing.GroupLayout(btnAppliance);
         btnAppliance.setLayout(btnApplianceLayout);
@@ -654,7 +654,7 @@ public class MainPageFrame extends javax.swing.JFrame {
         );
         btnApplianceLayout.setVerticalGroup(
             btnApplianceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
 
         sideNav.add(btnAppliance);
@@ -673,11 +673,11 @@ public class MainPageFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/invoice.png"))); // NOI18N
-        jLabel9.setText("Hóa đơn");
+        jLabel9.setText(" Hóa đơn");
 
         javax.swing.GroupLayout btnReceiptLayout = new javax.swing.GroupLayout(btnReceipt);
         btnReceipt.setLayout(btnReceiptLayout);
@@ -689,7 +689,7 @@ public class MainPageFrame extends javax.swing.JFrame {
         );
         btnReceiptLayout.setVerticalGroup(
             btnReceiptLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
 
         sideNav.add(btnReceipt);
@@ -708,11 +708,11 @@ public class MainPageFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/ThongKe.png"))); // NOI18N
-        jLabel10.setText("Thống kê");
+        jLabel10.setText(" Thống kê");
         jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel10MouseClicked(evt);
@@ -735,7 +735,7 @@ public class MainPageFrame extends javax.swing.JFrame {
         );
         btnSummaryLayout.setVerticalGroup(
             btnSummaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
 
         sideNav.add(btnSummary);
@@ -754,23 +754,23 @@ public class MainPageFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/user (1).png"))); // NOI18N
-        jLabel11.setText("Thiết lập");
+        jLabel11.setText(" Thiết lập");
 
         javax.swing.GroupLayout btnProfileLayout = new javax.swing.GroupLayout(btnProfile);
         btnProfile.setLayout(btnProfileLayout);
         btnProfileLayout.setHorizontalGroup(
             btnProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnProfileLayout.createSequentialGroup()
-                .addGap(0, 20, Short.MAX_VALUE)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 15, Short.MAX_VALUE)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         btnProfileLayout.setVerticalGroup(
             btnProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
 
         sideNav.add(btnProfile);
@@ -795,11 +795,11 @@ public class MainPageFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/logout (1).png"))); // NOI18N
-        jLabel12.setText("Đăng xuất");
+        jLabel12.setText(" Đăng xuất");
 
         javax.swing.GroupLayout btnLogoutLayout = new javax.swing.GroupLayout(btnLogout);
         btnLogout.setLayout(btnLogoutLayout);
@@ -830,11 +830,11 @@ public class MainPageFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/turn-off.png"))); // NOI18N
-        jLabel13.setText("Thoát");
+        jLabel13.setText("  Thoát");
 
         javax.swing.GroupLayout btnExitLayout = new javax.swing.GroupLayout(btnExit);
         btnExit.setLayout(btnExitLayout);
@@ -996,8 +996,8 @@ public class MainPageFrame extends javax.swing.JFrame {
                         .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(panelRound7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(29, 29, 29)
-                .addComponent(jLabel51, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                .addGap(1665, 1665, 1665))
+                .addComponent(jLabel51, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(1680, 1680, 1680))
         );
 
         pnlShowPanel.add(jPanel16);
@@ -1154,8 +1154,9 @@ public class MainPageFrame extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        btnXoaNV.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnXoaNV.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         btnXoaNV.setText("Xóa");
+        btnXoaNV.setPreferredSize(new java.awt.Dimension(100, 30));
         btnXoaNV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaNVActionPerformed(evt);
@@ -1163,8 +1164,9 @@ public class MainPageFrame extends javax.swing.JFrame {
         });
         jPanel20.add(btnXoaNV);
 
-        btndatlaiNv.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btndatlaiNv.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         btndatlaiNv.setText("Làm mới");
+        btndatlaiNv.setPreferredSize(new java.awt.Dimension(100, 30));
         btndatlaiNv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btndatlaiNvActionPerformed(evt);
@@ -1172,8 +1174,9 @@ public class MainPageFrame extends javax.swing.JFrame {
         });
         jPanel20.add(btndatlaiNv);
 
-        btnThemNv.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnThemNv.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         btnThemNv.setText("Thêm ");
+        btnThemNv.setPreferredSize(new java.awt.Dimension(100, 30));
         btnThemNv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemNvActionPerformed(evt);
@@ -1181,8 +1184,9 @@ public class MainPageFrame extends javax.swing.JFrame {
         });
         jPanel20.add(btnThemNv);
 
-        btncapnhatNV.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btncapnhatNV.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         btncapnhatNV.setText("Cập nhật");
+        btncapnhatNV.setPreferredSize(new java.awt.Dimension(100, 30));
         btncapnhatNV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btncapnhatNVActionPerformed(evt);
@@ -1274,7 +1278,7 @@ public class MainPageFrame extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1431, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1442, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1419,24 +1423,24 @@ public class MainPageFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1639, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1652, Short.MAX_VALUE))
         );
 
         container.add(pnlKhachHang, "khachHang");
 
         tblSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "MÃ SP", "HÌNH", "LOẠI SP", "TÊN SẢN PHẨM", "GIÁ"
+                "MÃ SP", "HÌNH", "LOẠI SP", "TÊN SẢN PHẨM", "GIÁ", "TIỆN ÍCH"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1499,16 +1503,16 @@ public class MainPageFrame extends javax.swing.JFrame {
             pblQLSanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pblQLSanPhamLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pblQLSanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel48, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pblQLSanPhamLayout.createSequentialGroup()
                         .addComponent(btnTaoSP, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 82, Short.MAX_VALUE))
+                        .addGap(0, 87, Short.MAX_VALUE))
                     .addComponent(txtTimKiem))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1716, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1720, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1608,6 +1612,7 @@ public class MainPageFrame extends javax.swing.JFrame {
 
         btnthem_SP.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         btnthem_SP.setText("Đặt thêm");
+        btnthem_SP.setPreferredSize(new java.awt.Dimension(100, 30));
         btnthem_SP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnthem_SPActionPerformed(evt);
@@ -1617,6 +1622,7 @@ public class MainPageFrame extends javax.swing.JFrame {
 
         btnsua_SP.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         btnsua_SP.setText("Sửa");
+        btnsua_SP.setPreferredSize(new java.awt.Dimension(100, 30));
         btnsua_SP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnsua_SPActionPerformed(evt);
@@ -1626,6 +1632,7 @@ public class MainPageFrame extends javax.swing.JFrame {
 
         btndatlai_SP.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         btndatlai_SP.setText("Làm mới");
+        btndatlai_SP.setPreferredSize(new java.awt.Dimension(100, 30));
         btndatlai_SP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btndatlai_SPActionPerformed(evt);
@@ -1635,6 +1642,7 @@ public class MainPageFrame extends javax.swing.JFrame {
 
         btnThemNL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         btnThemNL.setText("Thêm mới NL");
+        btnThemNL.setPreferredSize(new java.awt.Dimension(123, 30));
         btnThemNL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemNLActionPerformed(evt);
@@ -1734,7 +1742,7 @@ public class MainPageFrame extends javax.swing.JFrame {
                         .addGap(1, 1, 1)
                         .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 1606, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 1616, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2339,7 +2347,7 @@ public class MainPageFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel21)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1396, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1409, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlThietLapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDoiMK)
@@ -2417,7 +2425,7 @@ public class MainPageFrame extends javax.swing.JFrame {
         btnClicked(btnProduct, () -> {
             showCard("sanPham");
             runController(() -> {
-                ProductController.fillTableSanPham("");
+                ProductController.init();
             });
         });
     }//GEN-LAST:event_btnProductMouseClicked
@@ -2529,14 +2537,12 @@ public class MainPageFrame extends javax.swing.JFrame {
 
     private void btnDeleteClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteClientActionPerformed
         HoaDonImple hddao = new HoaDonImple();
-        if (hddao.selectByID(txtMaKH.getText()) == null) {
+        if(hddao.selectByID(txtMaKH.getText()).isEmpty()){
             runController(() -> {
                 ClientController.delete();
             });
-        } else {
-            XMsgBox.inform(null, "Xóa khách hàng thất bại");
-            return;
-        }
+        }else
+            XMsgBox.inform(null, "Không thể xóa khách hàng này !");
     }//GEN-LAST:event_btnDeleteClientActionPerformed
 
     private void btnUpdateClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateClientActionPerformed
@@ -3093,5 +3099,5 @@ public class MainPageFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtnamsinh_NV;
     private javax.swing.JTextField txtsodienthoai_NV;
     // End of variables declaration//GEN-END:variables
-    
+
 }

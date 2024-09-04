@@ -1,8 +1,8 @@
-
 package controlls;
 
 import daoImpl.HoaDonImple;
 import daoImpl.KhachHangDAO;
+import entities.HoaDon;
 import entities.KhachHang;
 import java.util.List;
 import javax.swing.JButton;
@@ -13,8 +13,8 @@ import javax.swing.table.DefaultTableModel;
 import utils.XMsgBox;
 import utils.XValidate;
 
-
 public class ClientController {
+
     private static int curr = -1;
     private static final KhachHangDAO dao = new KhachHangDAO();
     public static JFrame frame;
@@ -25,8 +25,8 @@ public class ClientController {
     public static JButton btnThem;
     public static JButton btnSua;
     public static JButton btnXoa;
-    
-    public static void initialize(JFrame frame, JTable table, JTextField txtMaKH, JTextField txtHoVaTen, JTextField txtSDT,JButton btnThem,JButton btnSua,JButton btnXoa){
+
+    public static void initialize(JFrame frame, JTable table, JTextField txtMaKH, JTextField txtHoVaTen, JTextField txtSDT, JButton btnThem, JButton btnSua, JButton btnXoa) {
         ClientController.frame = frame;
         ClientController.table = table;
         ClientController.txtMaKH = txtMaKH;
@@ -36,8 +36,8 @@ public class ClientController {
         ClientController.btnSua = btnSua;
         ClientController.btnXoa = btnXoa;
     }
-    
-    public static void getComponents(JFrame frame, JTable table, JTextField txtMaKH, JTextField txtHoVaTen, JTextField txtSDT,JButton btnThem,JButton btnSua,JButton btnXoa){
+
+    public static void getComponents(JFrame frame, JTable table, JTextField txtMaKH, JTextField txtHoVaTen, JTextField txtSDT, JButton btnThem, JButton btnSua, JButton btnXoa) {
         frame = ClientController.frame;
         table = ClientController.table;
         txtMaKH = ClientController.txtMaKH;
@@ -74,17 +74,15 @@ public class ClientController {
             XMsgBox.alert(frame, "Lỗi truy vấn dữ liệu!");
         }
     }
-    
-    
-    
-    public static void tableClick(){
+
+    public static void tableClick() {
         curr = table.getSelectedRow();
         edit();
     }
 
-    public static void insert(){
+    public static void insert() {
         KhachHang model = getForm();
-        if(model == null){
+        if (model == null) {
             return;
         }
         try {
@@ -100,7 +98,7 @@ public class ClientController {
 
     public static void update() {
         KhachHang model = getForm();
-        if(model == null){
+        if (model == null) {
             return;
         }
         try {
@@ -111,16 +109,17 @@ public class ClientController {
             XMsgBox.alert(frame, "Cập nhật thất bại!");
         }
     }
-    
+
     HoaDonImple hddao = new HoaDonImple();
+
     public static void delete() {
-        String MaKH = txtMaKH.getText();
+        String maKH = txtMaKH.getText();
         try {
-            dao.delete(MaKH);
+            dao.delete(maKH);
             fillTable();
             clearForm();
             XMsgBox.alert(frame, "Xóa thành công!");
-        } catch (Exception e){
+        } catch (Exception e) {
             XMsgBox.alert(frame, "Xóa thất bại!");
         }
     }
@@ -148,41 +147,41 @@ public class ClientController {
         txtSDT.setText(kh.getSDT());
     }
 
-    public static KhachHang getForm(){
+    public static KhachHang getForm() {
         KhachHang kh = new KhachHang();
         kh.setMaKH(txtMaKH.getText());
         kh.setHoVaTen(txtHoVaTen.getText());
         kh.setSDT(txtSDT.getText());
-        if(check(kh)){
+        if (check(kh)) {
             return kh;
         }
         return null;
     }
-    
-    public static boolean check(KhachHang kh){
-        if(kh.getMaKH().equals("") || 
-           kh.getHoVaTen().equals("") ||
-           kh.getSDT().equals("")){
+
+    public static boolean check(KhachHang kh) {
+        if (kh.getMaKH().equals("")
+                || kh.getHoVaTen().equals("")
+                || kh.getSDT().equals("")) {
             XMsgBox.inform(null, "Vui lòng điền đủ thông tin khách hàng.");
             return false;
-        }else{
-            if(!XValidate.checkName(kh.getHoVaTen())){
+        } else {
+            if (!XValidate.checkName(kh.getHoVaTen())) {
                 XMsgBox.inform(null, "Sai định dạng tên !!");
                 return false;
             }
-            if(!XValidate.phoneNumber(kh.getSDT())){
-                XMsgBox.inform(null,"Sai định dạng số điện thoại");
+            if (!XValidate.phoneNumber(kh.getSDT())) {
+                XMsgBox.inform(null, "Sai định dạng số điện thoại");
                 return false;
             }
         }
-        if(dao.checkPhoneNumber(kh.getSDT()) != null){
+        if (dao.checkPhoneNumber(kh.getSDT()) != null) {
             XMsgBox.inform(null, "Số điện thoại đã tồn tại !!");
             return false;
         }
         return true;
     }
 
-    private static void updateStatus()  {
+    private static void updateStatus() {
         boolean edit = (curr >= 0);
         txtMaKH.setEditable(!edit);
         btnThem.setEnabled(!edit);

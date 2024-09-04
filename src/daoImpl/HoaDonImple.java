@@ -75,16 +75,16 @@ public class HoaDonImple implements HoaDonDAO {
         return this.selectBySql(sql, maKH);
     }
     
-    public HoaDon selectByMaHD(String mahd){
+    public HoaDon selectByMaHD(String maHD){
         String sql = " SELECT * FROM HOADON WHERE MAHD = ? ";
-        List <HoaDon> list = this.selectBySql(sql, mahd);
-        return list.size()>0?list.get(0):null;
+        List <HoaDon> list = this.selectBySql(sql, maHD);
+        return list.isEmpty()?list.get(0):null;
     }
     
-    public HoaDon selectByMaNV(String manv){
+    public HoaDon selectByMaNV(String maNV){
         String sql = " SELECT * FROM HOADON WHERE MANV = ? ";
-        List <HoaDon> list = this.selectBySql(sql, manv);
-        return list.size()>0?list.get(0):null;
+        List <HoaDon> list = this.selectBySql(sql, maNV);
+        return list.isEmpty()?list.get(0):null;
     }
 
     @Override
@@ -145,7 +145,7 @@ public class HoaDonImple implements HoaDonDAO {
                 Entity.getMaHD()
             };
             XJdbc.IUD(sql, value);
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             XMsgBox.alert(null, "Lỗi truy vấn dữ liệu !");
         }
         return Entity;

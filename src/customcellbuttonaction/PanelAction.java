@@ -18,6 +18,13 @@ public class PanelAction extends javax.swing.JPanel {
                 event.onDetete(row);
             }
         });
+        
+        cmdEdit.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                event.onEdit(row);
+            }
+        });
     }
 
   
@@ -26,15 +33,21 @@ public class PanelAction extends javax.swing.JPanel {
     private void initComponents() {
 
         cmdDelete = new customcellbuttonaction.ActionButton();
+        cmdEdit = new customcellbuttonaction.ActionButton();
 
-        setLayout(new java.awt.BorderLayout());
+        setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new java.awt.GridLayout(1, 0));
 
         cmdDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/customcellbuttonaction/el-hg-icon-delete-16.png"))); // NOI18N
-        add(cmdDelete, java.awt.BorderLayout.CENTER);
+        add(cmdDelete);
+
+        cmdEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/customcellbuttonaction/pen.png"))); // NOI18N
+        add(cmdEdit);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private customcellbuttonaction.ActionButton cmdDelete;
+    private customcellbuttonaction.ActionButton cmdEdit;
     // End of variables declaration//GEN-END:variables
 }

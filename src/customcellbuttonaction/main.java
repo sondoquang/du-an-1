@@ -10,6 +10,11 @@ public class main extends javax.swing.JFrame {
                 System.out.println("Xoa" + row);
             }
 
+            @Override
+            public void onEdit(int row) {
+                System.out.println("edit");
+            }
+
         };
         table.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
         table.getColumnModel().getColumn(3).setCellEditor(new TableActionCelllEditor(event));

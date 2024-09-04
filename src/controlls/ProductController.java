@@ -1,6 +1,10 @@
 
 package controlls;
 
+import customcellbuttonaction.TableActionCellEditor;
+import customcellbuttonaction.TableActionCellRender;
+import customcellbuttonaction.TableActionEvent;
+import daoImpl.HoaDonChiTietImple;
 import daoimpl.SanPhamImple;
 import entities.SanPham;
 import java.util.List;
@@ -27,7 +31,28 @@ public class ProductController {
     }
 
     private static final SanPhamImple spdao = new SanPhamImple();
+    private static final HoaDonChiTietImple hdctdao = new HoaDonChiTietImple();
 
+    public static void init() {
+        setActionTable();
+        fillTableSanPham("");
+    }
+    
+    public static void setActionTable(){
+        TableActionEvent actionEvent = new TableActionEvent() {
+            @Override
+            public void onDetete(int row) {
+                deleteProduct((String) tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 0));
+            }
+
+            @Override
+            public void onEdit(int row) {
+                chuyenTrang();
+            }
+        };
+        tblSanPham.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
+        tblSanPham.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(actionEvent));
+    }
     public static void fillTableSanPham(String tenSP) {
         DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
         try {
@@ -43,7 +68,7 @@ public class ProductController {
                 };
                 model.addRow(row);
             }
-            XTable.insertImage(tblSanPham, 1, 130, 130, "ProdImages");
+            XTable.insertImage(tblSanPham, 1, 100, 100, "ProdImages");
         } catch (Exception e) {
             XMsgBox.alert(frame, "Lỗi truy vấn dữ liệu !!");
         }
@@ -61,5 +86,17 @@ public class ProductController {
         masp = null;
         new CheBienJDialog(frame, true).setVisible(true);
         fillTableSanPham("");
+    }
+    
+    public static void deleteProduct(String maSP){
+        if(hdctdao.selectByMaSP(maSP).isEmpty()){
+            if(XMsgBox.confirm(frame, "Bạn muốn xóa sản phẩm này chứ ?")){
+                spdao.delete(maSP);
+                fillTableSanPham(maSP);
+                XMsgBox.inform(frame, "Xóa sản phẩm thành công.");
+            }
+        }else{
+            XMsgBox.inform(frame,"Không thể xóa sản phẩm này !");
+        }
     }
 }

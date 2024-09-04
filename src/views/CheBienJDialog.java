@@ -92,6 +92,7 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
         jLabel6.setText("Loại sản phẩm:");
         jLabel6.setToolTipText("");
 
+        cboLoaiSP.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         cboLoaiSP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trà Sữa", "Cà Phê", "Trà", " " }));
 
         jPanel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
@@ -511,9 +512,9 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
     @Override
     public void initialize() {
         this.setLocationRelativeTo(this);
-        this.setTitle("Chế biến");
+        this.setTitle("Chế Biến");
         this.fillTableNguyenLieu();
-        txtMaSP.setText(spdao.createIDProduct());
+        txtMaSP.setText(spdao.createMaSP());
         if(ProductController.masp != null){
             this.setForm();
         }
@@ -538,26 +539,24 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
             }
             XTable.insertImage(tblNguyenLieu, 2, 100, 100, "IngriImages");
         } catch (Exception e) {
-            XMsgBox.alert(this, "Lỗi kết nối database !!");
+            XMsgBox.alert(this, "Lỗi truy vấn dữ liệu !!");
         }
     }
 
     @Override
     public void setImageProduct() {
         JFileChooser chooser = new JFileChooser();
-        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
             XImage.save("ProdImages", file);
-            this.prepareSetImage(file.getName());
+            this.setImage(file.getName());
         }
     }
 
-    public void prepareSetImage(String nameFile) {
+    public void setImage(String nameFile) {
         try {
             ImageIcon Icon = XImage.read("ProdImages", nameFile);
-            lblImage.setIcon(Icon);
-            Image im = Icon.getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH);
-            Icon.setImage(im);
+            lblImage.setIcon(XImage.getResized(XImage.read("ProdImages", nameFile), lblImage.getWidth(), lblImage.getHeight()));
             lblImage.setToolTipText(nameFile);
         } catch (Exception e) {
             XMsgBox.alert(this, "Ảnh không có sẵn .");
@@ -664,7 +663,7 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
         lblImage.setIcon(null);
         lblImage.setToolTipText("");
         txtGiaVon.setText("");
-        txtMaSP.setText(spdao.createIDProduct());
+        txtMaSP.setText(spdao.createMaSP());
         btnThemSP.setEnabled(true);
         updateStatus();
         model.setRowCount(0);
@@ -744,8 +743,8 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
     public void setForm(){
         DefaultTableModel model = (DefaultTableModel) tblThanhPhan.getModel();
         try {
-            String masp = ProductController.masp;
-            SanPham sp = spdao.getItemsByMaSP(masp);
+            String maSP = ProductController.masp;
+            SanPham sp = spdao.getItemsByMaSP(maSP);
             txtMaSP.setText(sp.getMaSP());
             txtGiaBan.setText(sp.getGiaTien()+"");
             txtTenSP.setText(sp.getTenSP());
@@ -756,11 +755,10 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
             }else{
                 cboLoaiSP.setSelectedIndex(2);
             }
-            this.prepareSetImage(sp.getHinh());
-            List <ChiTietSanPham> list = ctspdao.selectAllNguyenLieu(masp);
+            this.setImage(sp.getHinh());
+            List <ChiTietSanPham> list = ctspdao.selectAllNguyenLieu(maSP);
             for(ChiTietSanPham ctsp: list){
                 NguyenLieu nl = nldao.selectByID(ctsp.getMaNL());
-                System.out.println(nl.getMaNL());
                 Object [] row ={
                     ctsp.getMaNL(),
                     nl.getTenNL(),
@@ -769,7 +767,6 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
                 };
                 model.addRow(row);
             }
-            System.out.println(this.giaVon());
             txtGiaVon.setText(this.giaVon()+"");
         } catch (Exception e) {
         }
@@ -783,7 +780,7 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
             return false;
         if((cboLoaiSP.getSelectedItem()+"").equals(""))
             return false;
-        if(lblImage.getToolTipText().equals(""))
+        if(lblImage.getToolTipText() == null)
             return false;
         return true;
     }
@@ -807,15 +804,10 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
         }else{
             btnUpdate.setEnabled(false);
         }
-        
         if(!XAuth.isAdmin()){
             btnThemSP.setEnabled(false);
             btnreset.setEnabled(false);
             btnUpdate.setEnabled(false);
-        }else{
-            btnThemSP.setEnabled(true);
-            btnUpdate.setEnabled(true);
-            btnUpdate.setEnabled(true);
         }
     }
 }

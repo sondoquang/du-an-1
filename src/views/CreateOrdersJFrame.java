@@ -4,7 +4,7 @@ import controller.BanHangController;
 import controlls.ProductController;
 import controlls.ReceiptController;
 import customcellbuttonaction.TableActionCellRender;
-import customcellbuttonaction.TableActionCelllEditor;
+import customcellbuttonaction.TableActionCellEditor;
 import customcellbuttonaction.TableActionEvent;
 import daoImpl.ChiTietSanPhamImple;
 import daoImpl.HoaDonChiTietImple;
@@ -52,6 +52,7 @@ import utils.XValidate;
 public class CreateOrdersJFrame extends SubController implements BanHangController {
 
     SanPhamImple spdao = new SanPhamImple();
+    HoaDonChiTietImple hdctdao = new HoaDonChiTietImple();
     KhachHangImple khdao = new KhachHangImple();
     HoaDonImple hddao = new HoaDonImple();
     List<SanPham> list;
@@ -66,6 +67,7 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanelGredient1 = new jpanelgredient.JPanelGredient();
         btnCafe = new button.ButtonCustom();
@@ -88,7 +90,6 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
         btnTimKiemKH = new button.ButtonCustom();
         jLabel15 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        cboTrangThai = new javax.swing.JComboBox<>();
         cboKhachHang = new javax.swing.JComboBox<>();
         btnTaoKH = new button.ButtonCustom();
         txtTienThoi = new javax.swing.JTextField();
@@ -101,6 +102,8 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
         txtPrice = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        rdoThanhToan = new javax.swing.JRadioButton();
+        rdoChuaThanhToan = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jPanelGredient2 = new jpanelgredient.JPanelGredient();
         panelRound1 = new jpanelrounded.PanelRound();
@@ -336,9 +339,6 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Khách hàng:");
 
-        cboTrangThai.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        cboTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã thanh toán", "Chưa thanh toán" }));
-
         cboKhachHang.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
 
         btnTaoKH.setText("Tạo KH");
@@ -420,6 +420,19 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
         jLabel8.setForeground(new java.awt.Color(51, 51, 51));
         jLabel8.setText("VNĐ");
 
+        buttonGroup1.add(rdoThanhToan);
+        rdoThanhToan.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        rdoThanhToan.setText("Đã thanh toán");
+
+        buttonGroup1.add(rdoChuaThanhToan);
+        rdoChuaThanhToan.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        rdoChuaThanhToan.setText("Chưa thanh toán");
+        rdoChuaThanhToan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoChuaThanhToanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -472,7 +485,10 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
                                         .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(btnTimKiemKH, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(cboTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(rdoThanhToan)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(rdoChuaThanhToan))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(96, 96, 96)
                                 .addComponent(cboKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -488,7 +504,7 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXoa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 4577, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 4582, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnTimKiemKH, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -503,7 +519,8 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rdoThanhToan)
+                    .addComponent(rdoChuaThanhToan))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -686,17 +703,14 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void tblOderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOderMouseClicked
-        if (evt.getClickCount() == 2) {
-            DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
-            this.doclickProduct(model.getValueAt(tblOder.getSelectedRow(), 0)+"");
-        }
+       
     }//GEN-LAST:event_tblOderMouseClicked
 
     private void btnInHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHoaDonActionPerformed
-        if (mahdUD == null) {
+        if (maHDUD == null) {
             this.printBill();
         } else {
-            this.updateBills(mahdUD);
+            this.updateBills(maHDUD);
         }
 
     }//GEN-LAST:event_btnInHoaDonActionPerformed
@@ -784,6 +798,10 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
         // TODO add your handling code here:
     }//GEN-LAST:event_jScrollPane3MouseClicked
 
+    private void rdoChuaThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoChuaThanhToanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rdoChuaThanhToanActionPerformed
+
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */
 //        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -826,8 +844,8 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     private javax.swing.JButton btnTimKiem;
     private button.ButtonCustom btnTimKiemKH;
     private button.ButtonCustom btnXoa;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboKhachHang;
-    private javax.swing.JComboBox<String> cboTrangThai;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -852,6 +870,8 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     private jpanelrounded.PanelRound panelRound1;
     private jpanelrounded.PanelRound panelRound2;
     private javax.swing.JPanel pnlMain;
+    private javax.swing.JRadioButton rdoChuaThanhToan;
+    private javax.swing.JRadioButton rdoThanhToan;
     private javax.swing.JScrollPane scrollPaneMain;
     private customjtable.CustomJTable tblOder;
     private javax.swing.JTextField txtDiscount;
@@ -867,27 +887,27 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     private Double discountGoc = 0.0;
     HoaDonImple hdndao = new HoaDonImple();
     String maHD;
-    String mahdUD;
+    String maHDUD;
 
     @Override
     public void initialize(String maHD) {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.mahdUD = maHD;
+        this.maHDUD = maHD;
+        rdoThanhToan.setSelected(true);
         if (maHD != null) {
             this.setForm(maHD);
             this.hoanTraNguyenLieu(-1);
         }
         this.fillProductDetail("");
-        this.setImageProduct("logo.jpg", lblLogo);
         this.eventClickAddProduct();
         this.updateStatus(maHD);
         TableActionEvent event = new TableActionEvent() {
+            DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
             @Override
             public void onDetete(int row) {
                 if (tblOder.isEditing()) {
                     tblOder.getCellEditor().stopCellEditing();
                 }
-                DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
                 if (row >= 0) {
                     listProOrder.remove(model.getValueAt(row, 0) + "");
                     model.removeRow(row);
@@ -895,9 +915,13 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
                     updatePrice();
                 }
             }
+            @Override
+            public void onEdit(int row){
+                doclickProduct(model.getValueAt(row, 0)+"");
+            }
         };
         tblOder.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
-        tblOder.getColumnModel().getColumn(5).setCellEditor(new TableActionCelllEditor(event));
+        tblOder.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
     }
 
     private JLabel createNameProduct(String nameProduct, String IDColor) {
@@ -1013,7 +1037,7 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
                 hd.setTongTien(Double.parseDouble(txtPrice.getText()) + Double.parseDouble(txtGiamGia.getText()));
                 hd.setGiamGia(Double.valueOf(txtGiamGia.getText()));
                 hd.setTriGia(Double.valueOf(txtPrice.getText()));
-                hd.setTrangThai(cboTrangThai.getSelectedItem() + "");
+                hd.setTrangThai(rdoThanhToan.isSelected()?"Đã thanh toán":"Chưa thanh toán");
                 hdndao.insertHoaDon(hd);
                 this.insertCTHD(maHD);
                 this.clearForm();
@@ -1036,8 +1060,7 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
             Logger.getLogger(CreateOrdersJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    HoaDonChiTietImple hdctdao = new HoaDonChiTietImple();
-
+    
     private HoaDonChiTiet getValueHDCT(int address, String mahd) {
         DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
         HoaDonChiTiet hdct = new HoaDonChiTiet();
@@ -1059,14 +1082,13 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
                 hdctdao.insertCTHoaDon(getValueHDCT(i, mahd));
             }
             this.updateGiaTienNL();
-//            this.xuatBillKhachHang();
+            this.xuatBillKhachHang();
         } catch (NumberFormatException e) {
             XMsgBox.alert(this, "Thêm hóa đơn thất bại !");
         }
     }
 
     Map<String, Integer> listProOrder = new LinkedHashMap();
-
     @Override
     public void eventClickAddProduct() {
         int dem = -1;
@@ -1085,13 +1107,13 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
             }
         }
     }
-    
-    private void doclickProduct(String masp){
-        if (checkMaxCount(masp) < 0) {
+
+    private void doclickProduct(String maSP) {
+        if (checkMaxCount(maSP) < 0) {
             XMsgBox.inform(null, "Nguyên liệu không còn đủ !");
             return;
         }
-        int maxCount = checkMaxCount(masp);
+        int maxCount = checkMaxCount(maSP);
         int count = chonSoLuong();
         if (count == -1) {
             return;
@@ -1100,10 +1122,10 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
             XMsgBox.inform(null, "Nguyên liệu chỉ đủ cho " + maxCount + "sản phẩm.");
             return;
         }
-        if (!listProOrder.containsKey(masp)) {
-            listProOrder.put(masp, count);
+        if (!listProOrder.containsKey(maSP)) {
+            listProOrder.put(maSP, count);
         } else {
-            listProOrder.replace(masp, count);
+            listProOrder.replace(maSP, count);
         }
         fillTableOrder();
         resetBill();
@@ -1338,17 +1360,6 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
         return maxCount >= count;
     }
 
-    public boolean checkMaSP(String maSP) {
-        DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String masp = model.getValueAt(i, 0) + "";
-            if (masp.equals(maSP)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public int chonSoLuong() {
         String soLuong = XMsgBox.prompt(null, "Nhập số lượng:");
         if (XValidate.positiveInt(soLuong) && Integer.parseInt(soLuong) > 0) {
@@ -1357,18 +1368,19 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
         XMsgBox.alert(null, "Số lượng phải nguyên dương !");
         return -1;
     }
+
     @Override
     public void updateNguyenLieu(String maSP, int heSo) {
         List<ChiTietSanPham> list = ctspdao.selectAllNguyenLieu(maSP);
-        for (ChiTietSanPham ctsp : list){
+        for (ChiTietSanPham ctsp : list) {
             try {
-            NguyenLieu nl = new NguyenLieu();
+                NguyenLieu nl = new NguyenLieu();
                 nl.setMaNL(ctsp.getMaNL());
-                nl.setTonKho(ctsp.getSoLuong()*heSo);
+                nl.setTonKho(ctsp.getSoLuong() * heSo);
                 nldao.updateTKNguyenLieu(nl);
-            } catch(Exception e) {
-            XMsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
-        }
+            } catch (Exception e) {
+                XMsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
+            }
         }
     }
 
@@ -1376,9 +1388,9 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
         DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
         if (model.getRowCount() > 0) {
             for (int i = 0; i < tblOder.getRowCount(); i++) {
-                String masp = model.getValueAt(i, 0)+"";
-                int soLuong = Integer.parseInt(model.getValueAt(i, 3)+"");
-                this.updateNguyenLieu(masp, heSo*soLuong);
+                String masp = model.getValueAt(i, 0) + "";
+                int soLuong = Integer.parseInt(model.getValueAt(i, 3) + "");
+                this.updateNguyenLieu(masp, heSo * soLuong);
             }
         }
     }
@@ -1404,12 +1416,11 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
         }
     }
     
-    public void returnNguyenLieu(){
-        List<HoaDonChiTiet> list = hdctdao.selectByID(mahdUD);
-        if(tblOder.getRowCount() > 0 && mahdUD != null){
-            for (HoaDonChiTiet hdct : list) {
-                updateNguyenLieu(hdct.getMaSP(), 1);
-            }
+    @Override
+    public void returnNguyenLieu() {
+        List<HoaDonChiTiet> list = hdctdao.selectByID(maHDUD);
+        for (HoaDonChiTiet hdct : list) {
+            updateNguyenLieu(hdct.getMaSP(), 1*hdct.getSoLuong());
         }
     }
 
@@ -1422,17 +1433,22 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     }
 
     @Override
-    public void setForm(String mahd) {
-        List<HoaDonChiTiet> list = hdctdao.selectByID(mahd);
+    public void setForm(String maHD) {
+        List<HoaDonChiTiet> list = hdctdao.selectByID(maHD);
         for (HoaDonChiTiet hdct : list) {
             listProOrder.put(hdct.getMaSP(), hdct.getSoLuong());
         }
-        HoaDon hoaDon = hddao.selectByMaHD(mahd);
+        HoaDon hoaDon = hddao.selectByMaHD(maHD);
         if (hoaDon.getMaKH() != null) {
             this.fillCustomerByID(hoaDon.getMaKH());
         }
-        resetBill();
+        if(hoaDon.getTrangThai().equals("Đã thanh toán")){
+            rdoThanhToan.setSelected(true);
+        }else{
+            rdoChuaThanhToan.setSelected(true);
+        }
         fillTableOrder();
+        resetBill();
         updatePrice();
     }
 
@@ -1445,20 +1461,20 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
             hd.setMaKH(hddao.selectByMaHD(mahd).getMaKH());
         }
         hd.setMaNV(XAuth.getUser().getMaNV());
-        hd.setTongTien(Double.parseDouble(txtPrice.getText()));
-        hd.setGiamGia(Double.parseDouble(txtGiamGia.getText()));
+        hd.setTongTien(Double.valueOf(txtPrice.getText()));
+        hd.setGiamGia(Double.valueOf(txtGiamGia.getText()));
         hd.setTriGia(Double.parseDouble(txtPrice.getText()) - Double.parseDouble(txtGiamGia.getText()));
-        hd.setTrangThai(cboTrangThai.getSelectedItem() + "");
+        hd.setTrangThai(rdoThanhToan.isSelected()?"Đã thanh toán":"Chưa thanh toán");
         hddao.update(hd);
         hdctdao.delete(mahd);
         this.insertCTHD(mahd);
         this.clearForm();
+        XMsgBox.inform(null, "In hóa đơn thành công.");
     }
 
     @Override
     public void xuatBillKhachHang() {
-        // chờ xét duyệt mới có code nhé //
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // chờ xét duyệt mới có code nhé //    
     }
 
 }

@@ -2,6 +2,7 @@
 package controller;
 
 import javax.swing.JLabel;
+import jpanelrounded.PanelRound;
 
 
 public interface BanHangController {
@@ -20,8 +21,9 @@ public interface BanHangController {
      void updateStatus(String mahd);
      void setForm(String mahd);
      void updateBills(String mahd);
-     jpanelrounded.PanelRound createPanelProduct();
+     PanelRound createPanelProduct();
      JLabel createLabelProduct();
      void fillTableOrder();
      void updateNguyenLieu(String maSP, int heSo);
+     void returnNguyenLieu();
 }

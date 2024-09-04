@@ -12,5 +12,5 @@ public interface SanPhamDAO {
     void insertSanPham(SanPham Entity);
     String createMaSP();
     SanPham update(SanPham Entity);
-    String createIDProduct();
+    void delete(String maSP);
 }

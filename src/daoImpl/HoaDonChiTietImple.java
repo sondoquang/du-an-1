@@ -46,6 +46,11 @@ public class HoaDonChiTietImple implements HoaDonChiTietDAO {
         String sql = " SELECT * FROM HOADONCHITIET WHERE MAHD = ? ";
         return this.selectBySql(sql, maHD);
     }
+    
+    public List<HoaDonChiTiet> selectByMaSP(String maSP){
+        String sql = " SELECT * FROM HOADONCHITIET WHERE MASP = ? ";
+        return this.selectBySql(sql, maSP);
+    }
 
     @Override
     public void insertCTHoaDon(HoaDonChiTiet entity) {

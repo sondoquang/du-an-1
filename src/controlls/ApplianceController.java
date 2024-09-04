@@ -242,7 +242,6 @@ public class ApplianceController {
     
     public static void updateStaus(){
         if(curr == -1 ){
-//            btnxoa_SP.setEnabled(false);
             btnsua_SP.setEnabled(false);
             btnthem_SP.setEnabled(false);
             btnThemNL.setEnabled(true);
