@@ -1,8 +1,6 @@
 package views;
 
-import daoimpl.NguyenLieuImple;
 import entities.NguyenLieu;
-import java.awt.Image;
 import java.io.File;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -12,8 +10,9 @@ import utils.XImage;
 import utils.XMsgBox;
 import controller.NguyenLieuController;
 import controlls.ProductController;
-import daoImpl.ChiTietSanPhamImple;
-import daoimpl.SanPhamImple;
+import daoImpl.ChiTietSanPhamDAO;
+import daoImpl.NguyenLieuDAO;
+import daoimpl.SanPhamDAO;
 import entities.ChiTietSanPham;
 import entities.SanPham;
 import utils.XAuth;
@@ -21,10 +20,13 @@ import utils.XTable;
 import utils.XValidate;
 
 public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuController {
-
-    public CheBienJDialog(java.awt.Frame parent, boolean modal) {
+    NguyenLieuDAO nldao = new NguyenLieuDAO();
+    ChiTietSanPhamDAO ctspdao = new ChiTietSanPhamDAO();
+    String maSPUD;
+    public CheBienJDialog(java.awt.Frame parent, boolean modal, String maSPUD) {
         super(parent, modal);
         initComponents();
+        this.maSPUD = maSPUD;
         this.initialize();
     }
 
@@ -515,13 +517,11 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
         this.setTitle("Chế Biến");
         this.fillTableNguyenLieu();
         txtMaSP.setText(spdao.createMaSP());
-        if(ProductController.masp != null){
+        if(maSPUD != null){
             this.setForm();
         }
         this.updateStatus();
     }
-
-    NguyenLieuImple nldao = new NguyenLieuImple();
 
     @Override
     public void fillTableNguyenLieu() {
@@ -604,7 +604,7 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
             model.removeRow(row);
         }
     }
-    SanPhamImple spdao = new SanPhamImple();
+    SanPhamDAO spdao = new SanPhamDAO();
     String maSP;
 
     @Override
@@ -620,7 +620,7 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
                         sp.setTenSP(txtTenSP.getText());
                         sp.setGiaTien(Double.valueOf(txtGiaBan.getText()));
                         sp.setHinh(lblImage.getToolTipText());
-                        spdao.insertSanPham(sp);
+                        spdao.insert(sp);
                         this.insertCTSanPham(maSP);
                         XMsgBox.alert(this, "Thêm sản phẩm thành công");
                     } else {
@@ -636,8 +636,6 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
             XMsgBox.alert(this, "Sai định dạng giá bán !!");
         }
     }
-
-    ChiTietSanPhamImple ctspdao = new ChiTietSanPhamImple();
 
     @Override
     public void insertCTSanPham(String masp) {
@@ -731,8 +729,8 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
             sp.setGiaTien(Double.parseDouble(txtGiaBan.getText()));
             sp.setHinh(lblImage.getToolTipText());
             spdao.update(sp);
-            ctspdao.detele(ProductController.masp);
-            this.insertCTSanPham(ProductController.masp);
+            ctspdao.delete(maSPUD);
+            this.insertCTSanPham(maSPUD);
             XMsgBox.inform(this, "Cập nhật thành công.");
         } catch (Exception e) {
             XMsgBox.inform(this, "Cập nhật thất bại.");
@@ -743,8 +741,7 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
     public void setForm(){
         DefaultTableModel model = (DefaultTableModel) tblThanhPhan.getModel();
         try {
-            String maSP = ProductController.masp;
-            SanPham sp = spdao.getItemsByMaSP(maSP);
+            SanPham sp = (SanPham) spdao.selectByID(maSPUD);
             txtMaSP.setText(sp.getMaSP());
             txtGiaBan.setText(sp.getGiaTien()+"");
             txtTenSP.setText(sp.getTenSP());
@@ -756,7 +753,7 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
                 cboLoaiSP.setSelectedIndex(2);
             }
             this.setImage(sp.getHinh());
-            List <ChiTietSanPham> list = ctspdao.selectAllNguyenLieu(maSP);
+            List <ChiTietSanPham> list = ctspdao.selectAllApplianceForPro(maSPUD);
             for(ChiTietSanPham ctsp: list){
                 NguyenLieu nl = nldao.selectByID(ctsp.getMaNL());
                 Object [] row ={

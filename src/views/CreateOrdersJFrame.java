@@ -1,66 +1,18 @@
 package views;
 
-import controller.BanHangController;
-import controlls.ProductController;
 import controlls.ReceiptController;
-import customcellbuttonaction.TableActionCellRender;
-import customcellbuttonaction.TableActionCellEditor;
-import customcellbuttonaction.TableActionEvent;
-import daoImpl.ChiTietSanPhamImple;
-import daoImpl.HoaDonChiTietImple;
-import daoImpl.HoaDonImple;
-import daoimpl.SanPhamImple;
-import daoImpl.KhachHangImple;
-import daoimpl.NguyenLieuImple;
-import entities.ChiTietSanPham;
-import entities.HoaDon;
-import entities.HoaDonChiTiet;
-import entities.KhachHang;
-import entities.NguyenLieu;
-import entities.SanPham;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.SQLException;
+import controlls.SellController;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
-import jpanelrounded.PanelRound;
-import utils.XAuth;
-import utils.XJdbc;
-import utils.XImage;
-import utils.XMsgBox;
 import utils.SubController;
-import utils.XValidate;
 
-public class CreateOrdersJFrame extends SubController implements BanHangController {
-
-    SanPhamImple spdao = new SanPhamImple();
-    HoaDonChiTietImple hdctdao = new HoaDonChiTietImple();
-    KhachHangImple khdao = new KhachHangImple();
-    HoaDonImple hddao = new HoaDonImple();
-    List<SanPham> list;
-    JLabel[][] lblImg = new JLabel[100][3];
-
+public class CreateOrdersJFrame extends SubController {
+    
     public CreateOrdersJFrame(String maHD) {
         initComponents();
-        this.initialize(maHD);
+        runController(() -> {
+            SellController.init(maHD);
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -674,32 +626,34 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCafeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCafeActionPerformed
-
-        this.fillProductDetail("Cà Phê");
-        this.eventClickAddProduct();
+        runController(()->{
+            SellController.fillProductDetail("Cà Phê");
+        });
     }//GEN-LAST:event_btnCafeActionPerformed
 
     private void btnMilkTeaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMilkTeaActionPerformed
-
-        this.fillProductDetail("Trà Sữa");
-        this.eventClickAddProduct();
+        runController(()->{
+            SellController.fillProductDetail("Trà sữa");
+        });
     }//GEN-LAST:event_btnMilkTeaActionPerformed
 
     private void btnTeaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeaActionPerformed
-
-        this.fillProductDetail("Trà");
-        this.eventClickAddProduct();
+        runController(()->{
+            SellController.fillProductDetail("Trà");
+        });
     }//GEN-LAST:event_btnTeaActionPerformed
 
     private void btnAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllActionPerformed
-
-        this.fillProductDetail("");
-        this.eventClickAddProduct();
+        runController(()->{
+            SellController.fillProductDetail("Trà sữa");
+        });
     }//GEN-LAST:event_btnAllActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        this.hoanTraNguyenLieu(-1);
-        this.clearForm();
+        runController(()->{
+            SellController.hoanTraNguyenLieu(-1);
+            SellController.clearForm();
+        });
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void tblOderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOderMouseClicked
@@ -707,10 +661,16 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     }//GEN-LAST:event_tblOderMouseClicked
 
     private void btnInHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHoaDonActionPerformed
-        if (maHDUD == null) {
-            this.printBill();
+        if(SellController.maHDUD == null) {
+            System.out.println("chạy 1");
+            runController(()->{
+                SellController.printBill();
+            });
         } else {
-            this.updateBills(maHDUD);
+            System.out.println("chạy 2");
+            runController(()->{
+                SellController.updateBills();
+            });
         }
 
     }//GEN-LAST:event_btnInHoaDonActionPerformed
@@ -718,7 +678,9 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     private void btnTaoKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoKHActionPerformed
         new SaveOderCustomerJDialog(this, true, txtSDT.getText()).setVisible(true);
         if (SaveOderCustomerJDialog.makh != null)
-            this.fillCustomerByID(SaveOderCustomerJDialog.makh);
+            runController(()->{
+                SellController.fillCustomerByID(SaveOderCustomerJDialog.makh);
+            });
     }//GEN-LAST:event_btnTaoKHActionPerformed
 
     private void txtDiscountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDiscountKeyReleased
@@ -730,13 +692,9 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     }//GEN-LAST:event_tblOderKeyPressed
 
     private void txtDiscountKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDiscountKeyPressed
-        try {
-            Double giamGia = giaGoc * Double.valueOf(txtDiscount.getText());
-            Double triGia = giaGoc - giamGia;
-            txtGiamGia.setText(giamGia + "");
-            txtPrice.setText(triGia + "");
-        } catch (NumberFormatException e) {
-        }
+        runController(()->{
+            SellController.txtDiscountKeyPressed();
+        });
 
     }//GEN-LAST:event_txtDiscountKeyPressed
 
@@ -754,7 +712,10 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        this.returnNguyenLieu();
+        runController(()->{
+            SellController.returnNguyenLieu();
+            SellController.clearForm();
+        });
     }//GEN-LAST:event_formWindowClosing
 
     private void txtTienNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienNhanActionPerformed
@@ -770,7 +731,9 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     }//GEN-LAST:event_txtSDTKeyPressed
 
     private void btnTimKiemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemKHActionPerformed
-        this.searchCustomer();
+        runController(()->{
+            SellController.searchCustomer();
+        });
     }//GEN-LAST:event_btnTimKiemKHActionPerformed
 
     private void txtTienThoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienThoiActionPerformed
@@ -790,8 +753,10 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
-        this.fillProductDetail(txtTimKiem.getText());
-        this.eventClickAddProduct();
+        runController(()->{
+            SellController.fillProductDetail(txtTimKiem.getText());
+            SellController.eventClickAddProduct();
+        });
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void jScrollPane3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane3MouseClicked
@@ -883,598 +848,16 @@ public class CreateOrdersJFrame extends SubController implements BanHangControll
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 
-    private Double giaGoc = 0.0;
-    private Double discountGoc = 0.0;
-    HoaDonImple hdndao = new HoaDonImple();
-    String maHD;
-    String maHDUD;
-
-    @Override
-    public void initialize(String maHD) {
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.maHDUD = maHD;
-        rdoThanhToan.setSelected(true);
-        if (maHD != null) {
-            this.setForm(maHD);
-            this.hoanTraNguyenLieu(-1);
-        }
-        this.fillProductDetail("");
-        this.eventClickAddProduct();
-        this.updateStatus(maHD);
-        TableActionEvent event = new TableActionEvent() {
-            DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
-            @Override
-            public void onDetete(int row) {
-                if (tblOder.isEditing()) {
-                    tblOder.getCellEditor().stopCellEditing();
-                }
-                if (row >= 0) {
-                    listProOrder.remove(model.getValueAt(row, 0) + "");
-                    model.removeRow(row);
-                    resetBill();
-                    updatePrice();
-                }
-            }
-            @Override
-            public void onEdit(int row){
-                doclickProduct(model.getValueAt(row, 0)+"");
-            }
-        };
-        tblOder.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
-        tblOder.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
+    private void initController() {
+        SellController.initialize(this, btnAll, btnCafe, btnInHoaDon, btnMilkTea, btnTaoKH, btnTea, btnTimKiemKH, btnXoa, btnTimKiem, cboKhachHang, rdoChuaThanhToan, rdoThanhToan, tblOder, txtDiscount, txtGiamGia, txtPrice, txtSDT, txtTienNhan, txtTienThoi, txtTimKiem, pnlMain);
     }
 
-    private JLabel createNameProduct(String nameProduct, String IDColor) {
-        JLabel lblName = new JLabel();
-        lblName.setText(nameProduct);
-        lblName.setFont(new Font("Arial", Font.BOLD, 18));
-        lblName.setForeground(Color.decode(IDColor));
-        lblName.setHorizontalAlignment(SwingConstants.CENTER);
-        return lblName;
+    private void getController() {
+        SellController.getComponents(this, btnAll, btnCafe, btnInHoaDon, btnMilkTea, btnTaoKH, btnTea, btnTimKiemKH, btnXoa, btnTimKiem, cboKhachHang, rdoChuaThanhToan, rdoThanhToan, tblOder, txtDiscount, txtGiamGia, txtPrice, txtSDT, txtTienNhan, txtTienThoi, txtTimKiem, pnlMain);
     }
-
-    private void setImageProduct(String nameFile, JLabel nameLabel) {
-        try {
-            ImageIcon imageProduct = XImage.getResized(XImage.read("ProdImages", nameFile), nameLabel.getWidth(), nameLabel.getHeight());
-            nameLabel.setIcon(imageProduct);
-        } catch (Exception e) {
-            XMsgBox.alert(this, "Ảnh không có sẵn .");
-        }
-
+    private void runController(Runnable run) {
+        initController();
+        run.run();
+        getController();
     }
-    PanelRound[][] pnlProduct = new PanelRound[100][3];
-
-    @Override
-    public PanelRound createPanelProduct() {
-        PanelRound pnl = new PanelRound();
-        pnl.setSize(250, 250);
-        pnl.setLayout(new BorderLayout());
-        pnl.setBackground(Color.decode("#FFEFD5"));
-        pnl.setRoundButtomLeft(30);
-        pnl.setRoundButtomRight(30);
-        pnl.setRoundTopLeft(30);
-        pnl.setRoundTopRight(30);
-        return pnl;
-    }
-
-    @Override
-    public JLabel createLabelProduct() {
-        JLabel lbl = new JLabel();
-        lbl.setSize(245, 245);
-        lbl.setHorizontalAlignment(SwingConstants.CENTER);
-        lbl.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        return lbl;
-    }
-
-    @Override
-    public void fillProductDetail(String loaisp) {
-        int cnt = -1;
-        list = spdao.getItemsByID(loaisp);
-        int size = list.size();
-        pnlMain.removeAll();
-        pnlMain.setLayout(new GridLayout(size / 3 + 1, 3, 10, 10));
-        for (int i = 0; i < size / 3 + 1; i++) {
-            for (int j = 0; j < 3; j++) {
-                ++cnt;
-                if (cnt < size) {
-                    SanPham sp = list.get(cnt);
-                    pnlProduct[i][j] = this.createPanelProduct();
-                    lblImg[i][j] = this.createLabelProduct();
-                    lblImg[i][j].setToolTipText(sp.getMaSP());
-                    this.setImageProduct(sp.getHinh(), lblImg[i][j]);
-                    pnlProduct[i][j].add(lblImg[i][j], BorderLayout.NORTH);
-                    pnlProduct[i][j].add(this.createNameProduct(sp.getTenSP(), "#8B4513"), BorderLayout.CENTER);
-                    pnlProduct[i][j].add(this.createNameProduct(sp.getGiaTien() + " vnđ", "#8B4513"), BorderLayout.SOUTH);
-                    pnlMain.add(pnlProduct[i][j]);
-                    pnlMain.scrollRectToVisible(new Rectangle(pnlMain.getSize()));
-                }
-            }
-        }
-    }
-
-    @Override
-    public void clearForm() {
-        DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
-        model.setRowCount(0);
-        this.giaGoc = 0.0;
-        this.discountGoc = 0.0;
-        txtSDT.setText("");
-        txtPrice.setText(this.giaGoc + "");
-        txtGiamGia.setText(this.giaGoc * this.discountGoc + "");
-        txtDiscount.setText(this.discountGoc + "");
-        txtTienNhan.setText("");
-        txtTienThoi.setText("");
-        cboKhachHang.removeAllItems();
-        listProOrder.clear();
-    }
-
-    @Override
-    public void resetBill() {
-        DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
-        this.giaGoc = 0.0;
-        for (int i = 0; i < model.getRowCount(); i++) {
-            Double donGia = Double.valueOf(model.getValueAt(i, 2) + "");
-            Integer SLSP = Integer.valueOf(model.getValueAt(i, 3) + "");
-            model.setValueAt(donGia * SLSP, i, 4);
-            giaGoc += Double.parseDouble(model.getValueAt(i, 4) + "");
-        }
-        txtPrice.setText(giaGoc + "");
-    }
-
-    @Override
-    public void printBill() {
-        // Hệ số 1 : Trừ nguyên liệu làm ra sản phẩm trong kho 
-        this.hoanTraNguyenLieu(1);
-        try {
-            if (tblOder.getRowCount() != 0) {
-                maHD = hdndao.taoMaHoaDon();
-                KhachHang kh = (KhachHang) cboKhachHang.getSelectedItem();
-                HoaDon hd = new HoaDon();
-                hd.setMaHD(maHD);
-                hd.setMaKH(kh == null ? null : kh.getMaKH());
-                hd.setMaNV(XAuth.getUser().getMaNV());
-                hd.setNgayMua(new Date());
-                hd.setTongTien(Double.parseDouble(txtPrice.getText()) + Double.parseDouble(txtGiamGia.getText()));
-                hd.setGiamGia(Double.valueOf(txtGiamGia.getText()));
-                hd.setTriGia(Double.valueOf(txtPrice.getText()));
-                hd.setTrangThai(rdoThanhToan.isSelected()?"Đã thanh toán":"Chưa thanh toán");
-                hdndao.insertHoaDon(hd);
-                this.insertCTHD(maHD);
-                this.clearForm();
-                XMsgBox.inform(null, "In hoá đơn thành công.");
-            } else {
-                XMsgBox.alert(this, "Hóa đơn trống.");
-            }
-        } catch (NumberFormatException e) {
-            XMsgBox.alert(this, "In hóa đơn thất bại !!");
-        }
-
-    }
-
-    @Override
-    public void createBill() {
-        String sql = " EXEC SP_TAOMAHD ";
-        try {
-            XJdbc.select(sql);
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(CreateOrdersJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    private HoaDonChiTiet getValueHDCT(int address, String mahd) {
-        DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
-        HoaDonChiTiet hdct = new HoaDonChiTiet();
-        hdct.setMaHD(mahd);
-        hdct.setMaSP(model.getValueAt(address, 0) + "");
-        hdct.setSoLuong(Integer.valueOf(model.getValueAt(address, 3) + ""));
-        hdct.setDonGia(Double.valueOf(model.getValueAt(address, 2) + ""));
-        hdct.setThanhTien(Double.valueOf(model.getValueAt(address, 4) + ""));
-        hdct.setKhuyenMai(Double.valueOf(txtDiscount.getText()));
-        hdct.setGhiChu(model.getValueAt(address, 1) + "");
-        return hdct;
-    }
-
-    @Override
-    public void insertCTHD(String mahd) {
-        DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
-        try {
-            for (int i = 0; i < model.getRowCount(); i++) {
-                hdctdao.insertCTHoaDon(getValueHDCT(i, mahd));
-            }
-            this.updateGiaTienNL();
-            this.xuatBillKhachHang();
-        } catch (NumberFormatException e) {
-            XMsgBox.alert(this, "Thêm hóa đơn thất bại !");
-        }
-    }
-
-    Map<String, Integer> listProOrder = new LinkedHashMap();
-    @Override
-    public void eventClickAddProduct() {
-        int dem = -1;
-        for (int row = 0; row < list.size() / 3 + 1; row++) {
-            for (int col = 0; col < 3; col++) {
-                ++dem;
-                if (dem < list.size()) {
-                    String masp = lblImg[row][col].getToolTipText();
-                    lblImg[row][col].addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            doclickProduct(masp);
-                        }
-                    });
-                }
-            }
-        }
-    }
-
-    private void doclickProduct(String maSP) {
-        if (checkMaxCount(maSP) < 0) {
-            XMsgBox.inform(null, "Nguyên liệu không còn đủ !");
-            return;
-        }
-        int maxCount = checkMaxCount(maSP);
-        int count = chonSoLuong();
-        if (count == -1) {
-            return;
-        }
-        if (maxCount < count) {
-            XMsgBox.inform(null, "Nguyên liệu chỉ đủ cho " + maxCount + "sản phẩm.");
-            return;
-        }
-        if (!listProOrder.containsKey(maSP)) {
-            listProOrder.put(maSP, count);
-        } else {
-            listProOrder.replace(maSP, count);
-        }
-        fillTableOrder();
-        resetBill();
-        updatePrice();
-    }
-
-    @Override
-    public void fillTableOrder() {
-        DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
-        model.setRowCount(0);
-        for (String key : listProOrder.keySet()) {
-            SanPham sp = spdao.getItemsByMaSP(key);
-            Object[] row = {
-                sp.getMaSP(),
-                sp.getTenSP(),
-                sp.getGiaTien(),
-                listProOrder.get(key),
-                sp.getGiaTien() * listProOrder.get(key)
-            };
-            model.addRow(row);
-        }
-    }
-
-    @Override
-    public Double checkDiscount() {
-        Double sumMoney = 0.0;
-        Double giamGia = 0.0;
-        try {
-            KhachHang kh = (KhachHang) cboKhachHang.getSelectedItem();
-            if (kh != null) {
-                sumMoney = hddao.checkCountBills(kh.getMaKH());
-                if (sumMoney == null) {
-                    sumMoney = 0.0;
-                }
-            }
-            if (sumMoney + giaGoc >= 10000000) {
-                giamGia = 0.25;
-            } else if (sumMoney + giaGoc >= 5000000) {
-                giamGia = 0.15;
-            } else if (sumMoney + giaGoc >= 2000000) {
-                giamGia = 0.1;
-            } else if (sumMoney + giaGoc >= 1000000) {
-                giamGia = 0.05;
-            } else {
-                giamGia = 0.0;
-            }
-        } catch (Exception e) {
-        }
-        return giamGia;
-    }
-
-    @Override
-    public void fillCustomerByID(String maKH) {
-        try {
-            DefaultComboBoxModel model = (DefaultComboBoxModel) cboKhachHang.getModel();
-            model.removeAllElements();
-            KhachHang kh = khdao.selectByMaKH(maKH);
-            model.addElement(kh);
-            txtSDT.setText(kh.getSDT());
-            this.updatePrice();
-        } catch (Exception e) {
-            XMsgBox.alert(this, "Lỗi truy vấn dữ liệu !!");
-        }
-    }
-
-    private void updatePrice() {
-        discountGoc = this.checkDiscount();
-        String pattern = "#.##";
-        DecimalFormat decimalFormat = new DecimalFormat(pattern);
-        txtDiscount.setText(discountGoc + "");
-        Double giamGia = Double.valueOf(txtDiscount.getText()) * giaGoc;
-        Double triGia = giaGoc - giamGia;
-        txtGiamGia.setText(decimalFormat.format(giamGia));
-        txtPrice.setText(decimalFormat.format(triGia));
-    }
-
-//    @Override
-//    public void xuatBillKhachHang() {
-//        License.setLicenseKey("IRONSUITE.SONDQPS41027.GMAIL.COM.4975-A90B79BBB2-A7A64PLUNOQAEWFP-IE6YVLBAWBSL-NJMYNLOKSNL4-RGO5F57P4DGX-DU6EYU26LZKU-4GYJFRZI5BQ5-S7YUBZ-TLDTIUCDCOSNEA-DEPLOYMENT.TRIAL-UVFH6H.TRIAL.EXPIRES.20.AUG.2024");
-//        // Set a log path
-//        Settings.setLogPath(Paths.get("C:\\Users\\acer\\Documents"));
-//        String head
-//                = "<head>\n"
-//                + "    <style>\n"
-//                + "        div.hoadon{\n"
-//                + "            width: 500px;\n"
-//                + "            margin: auto;\n"
-//                + "            text-align: center;\n"
-//                + "        }\n"
-//                + "        p.title{\n"
-//                + "            font-weight: bolder;\n"
-//                + "            font-size: 25px;\n"
-//                + "            padding: 10px;\n"
-//                + "            border-bottom:  2px dashed   black;\n"
-//                + "        }\n"
-//                + "        div.hoadon> div.info{\n"
-//                + "            margin-top: -10px;\n"
-//                + "            font-size: 16px;\n"
-//                + "            padding-bottom: 10px;\n"
-//                + "        }\n"
-//                + "        table.sanpham{\n"
-//                + "            border-collapse: collapse;\n"
-//                + "            width: 100%;\n"
-//                + "        }\n"
-//                + "        table.sanpham th{\n"
-//                + "            padding: 10px;\n"
-//                + "            background-color: #33CCFF;\n"
-//                + "        }\n"
-//                + "        table.sanpham tr{\n"
-//                + "            text-align: center;\n"
-//                + "        }\n"
-//                + "        div.left{\n"
-//                + "            float: left; \n"
-//                + "            width: 50%; \n"
-//                + "        }\n"
-//                + "        div.left ,div.right{\n"
-//                + "            padding: 10px; \n"
-//                + "            font-size: 18px; font-weight: bold;\n"
-//                + "        }\n"
-//                + "\n"
-//                + "        table.thanhtoan{\n"
-//                + "            width: 100%;\n"
-//                + "            padding: 10px;\n"
-//                + "            border-top: 2px dashed black;\n"
-//                + "            border-bottom: 2px dashed black;\n"
-//                + "        }\n"
-//                + "    </style>\n"
-//                + "</head>";
-//        String body = "<body>\n"
-//                + "    <div class=\"hoadon\">\n"
-//                + "        <p class=\"title\">PHIẾU THANH TOÁN CINNAMON</p>\n"
-//                + "        <div class=\"info\">\n"
-//                + "            <span>MaHD : " + maHD + " - Ngày: " + XDate.toString(new Date(), "HH:mm:ss MM/dd/yyyy") + " - NV001 </span>\n"
-//                + "        </div>\n"
-//                + "        <table border=\"\" class=\"sanpham\" >\n"
-//                + "            <thead>\n"
-//                + "                <tr>\n"
-//                + "                    <th>Số lượng</th>\n"
-//                + "                    <th>Giá bán</th>\n"
-//                + "                    <th>Thành tiền</th>\n"
-//                + "                </tr>\n"
-//                + "            </thead>\n"
-//                + // Thực hiện vòng for() tại đây //
-//                "            <tbody>\n";
-//        DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
-//        for (int i = 0; i < tblOder.getRowCount(); i++) {
-//
-//            body += "               <tr>\n";
-//            body += "                    <td>" + model.getValueAt(i, 1) + " <br>" + model.getValueAt(i, 3) + "</td>\n";
-//            body += "                    <td>" + model.getValueAt(i, 2) + "</td>\n";
-//            body += "                    <td>" + model.getValueAt(i, 4) + "</td>\n";
-//            body += "                </tr>\n";
-//        }
-//
-//        body
-//                += "            </tbody>\n"
-//                + "        </table>\n"
-//                + "        <table class=\"thanhtoan\">\n"
-//                + "            <tfoot style=\"margin-top: 10px;\">\n"
-//                + "                <tr>\n"
-//                + "                    <th>Tổng tiền:</th>\n"
-//                + "                    <th></th>\n"
-//                + "                    <th>" + giaGoc + "</th>\n"
-//                + "                </tr>\n"
-//                + "                <tr>\n"
-//                + "                    <th>Giảm giá:</th>\n"
-//                + "                    <th>" + txtDiscount.getText() + " <span>%</span></th>\n"
-//                + "                    <th>" + txtGiamGia.getText() + "</th>\n"
-//                + "                </tr>\n"
-//                + "                <tr>\n"
-//                + "                    <th>Phải thanh toán:</th>:</th>\n"
-//                + "                    <th></th>\n"
-//                + "                    <th>" + txtPrice.getText() + "</th>\n"
-//                + "                </tr>\n"
-//                + "        </table>\n"
-//                +"<p style=\"text-align: right; margin-right: 50px; font-weight: bolder;\">"+cboTrangThai.getSelectedItem()+"</p>"
-//                + "        <p>CẢM ƠN QUÝ KHÁCH</p>\n"
-//                + "        <P>Đã đồng hàng cùng cửa hàng của chúng tôi</P>\n"
-//                + "    </div>\n"
-//                + "</body>";
-//        License.setLicenseKey("IRONSUITE.SONDQPS41027.GMAIL.COM.4975-A90B79BBB2-A7A64PLUNOQAEWFP-IE6YVLBAWBSL-NJMYNLOKSNL4-RGO5F57P4DGX-DU6EYU26LZKU-4GYJFRZI5BQ5-S7YUBZ-TLDTIUCDCOSNEA-DEPLOYMENT.TRIAL-UVFH6H.TRIAL.EXPIRES.20.AUG.2024");
-//        Settings.setLogPath(Paths.get("C:/tmp/IronPdfEngine.log"));
-//        PdfDocument myPdf = PdfDocument.renderHtmlAsPdf(head + body);
-//        try {
-//            myPdf.saveAs(Paths.get(maHD+".pdf"));
-//            File file = new File("D:\\Java\\DuAn1\\"+maHD+".pdf");
-//            if (file.toString().endsWith(".pdf")) 
-//            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + file);
-//        else {
-//            Desktop desktop = Desktop.getDesktop();
-//            desktop.open(file);
-//        }
-//        } catch (IOException ex) {
-//            Logger.getLogger(CreateOrdersJFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        XMsgBox.inform(null, "In hóa đơn thành công");
-//    }
-    ChiTietSanPhamImple ctspdao = new ChiTietSanPhamImple();
-    NguyenLieuImple nldao = new NguyenLieuImple();
-
-    public void updateGiaTienNL() {
-        Double giaTien = 0.0;
-        DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String masp = model.getValueAt(i, 0) + "";
-            int soLuong = Integer.parseInt(model.getValueAt(i, 3) + "");
-            List<ChiTietSanPham> list = ctspdao.selectAllNguyenLieu(masp);
-            for (ChiTietSanPham ctsp : list) {
-                giaTien = ctsp.getGiaVon();
-                nldao.updateGiaTien(giaTien * soLuong, ctsp.getMaNL());
-            }
-        }
-    }
-
-    public int checkMaxCount(String maSP) {
-        List<ChiTietSanPham> list = ctspdao.selectAllNguyenLieu(maSP);
-        int maxCount = 100000;
-        for (ChiTietSanPham ctsp : list) {
-            // Kiểm tra nguyên liệu tồn kho bao nhiêu //
-            int tonKho = nldao.checkNLTonKhoByMaNL(ctsp.getMaNL());
-            // Đơn vị nhỏ nhất để tạo nên sản phẩm //
-            int soLuong = ctsp.getSoLuong();
-            if ((tonKho / soLuong) < maxCount) {
-                maxCount = tonKho / soLuong;
-            }
-        }
-        return maxCount;
-    }
-
-    public boolean checkNguyenLieuSanPham(String maSP, int count) {
-        int maxCount = this.checkMaxCount(maSP);
-        return maxCount >= count;
-    }
-
-    public int chonSoLuong() {
-        String soLuong = XMsgBox.prompt(null, "Nhập số lượng:");
-        if (XValidate.positiveInt(soLuong) && Integer.parseInt(soLuong) > 0) {
-            return Integer.parseInt(soLuong);
-        }
-        XMsgBox.alert(null, "Số lượng phải nguyên dương !");
-        return -1;
-    }
-
-    @Override
-    public void updateNguyenLieu(String maSP, int heSo) {
-        List<ChiTietSanPham> list = ctspdao.selectAllNguyenLieu(maSP);
-        for (ChiTietSanPham ctsp : list) {
-            try {
-                NguyenLieu nl = new NguyenLieu();
-                nl.setMaNL(ctsp.getMaNL());
-                nl.setTonKho(ctsp.getSoLuong() * heSo);
-                nldao.updateTKNguyenLieu(nl);
-            } catch (Exception e) {
-                XMsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
-            }
-        }
-    }
-
-    public void hoanTraNguyenLieu(int heSo) {
-        DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
-        if (model.getRowCount() > 0) {
-            for (int i = 0; i < tblOder.getRowCount(); i++) {
-                String masp = model.getValueAt(i, 0) + "";
-                int soLuong = Integer.parseInt(model.getValueAt(i, 3) + "");
-                this.updateNguyenLieu(masp, heSo * soLuong);
-            }
-        }
-    }
-
-    @Override
-    public void searchCustomer() {
-        try {
-            DefaultComboBoxModel model = (DefaultComboBoxModel) cboKhachHang.getModel();
-            model.removeAllElements();
-            KhachHang kh = khdao.selectBySDT(txtSDT.getText());
-            if (kh != null) {
-                model.addElement(kh.toString());
-            } else {
-                if (XMsgBox.confirm(this, "Khách hàng mới\nBạn có muốn thêm mới khách hàng ?")) {
-                    ProductController.masp = null;
-                    new SaveOderCustomerJDialog(this, true, txtSDT.getText()).setVisible(true);
-                    if (SaveOderCustomerJDialog.makh != null) {
-                        this.fillCustomerByID(SaveOderCustomerJDialog.makh);
-                    }
-                }
-            }
-        } catch (Exception e) {
-        }
-    }
-    
-    @Override
-    public void returnNguyenLieu() {
-        List<HoaDonChiTiet> list = hdctdao.selectByID(maHDUD);
-        for (HoaDonChiTiet hdct : list) {
-            updateNguyenLieu(hdct.getMaSP(), 1*hdct.getSoLuong());
-        }
-    }
-
-    @Override
-    public void updateStatus(String mahd) {
-        if (mahd != null) {
-            btnTimKiemKH.setEnabled(false);
-            btnTaoKH.setEnabled(false);
-        }
-    }
-
-    @Override
-    public void setForm(String maHD) {
-        List<HoaDonChiTiet> list = hdctdao.selectByID(maHD);
-        for (HoaDonChiTiet hdct : list) {
-            listProOrder.put(hdct.getMaSP(), hdct.getSoLuong());
-        }
-        HoaDon hoaDon = hddao.selectByMaHD(maHD);
-        if (hoaDon.getMaKH() != null) {
-            this.fillCustomerByID(hoaDon.getMaKH());
-        }
-        if(hoaDon.getTrangThai().equals("Đã thanh toán")){
-            rdoThanhToan.setSelected(true);
-        }else{
-            rdoChuaThanhToan.setSelected(true);
-        }
-        fillTableOrder();
-        resetBill();
-        updatePrice();
-    }
-
-    @Override
-    public void updateBills(String mahd) {
-        this.hoanTraNguyenLieu(1);
-        HoaDon hd = new HoaDon();
-        hd.setMaHD(mahd);
-        if (hddao.selectByMaHD(mahd) != null) {
-            hd.setMaKH(hddao.selectByMaHD(mahd).getMaKH());
-        }
-        hd.setMaNV(XAuth.getUser().getMaNV());
-        hd.setTongTien(Double.valueOf(txtPrice.getText()));
-        hd.setGiamGia(Double.valueOf(txtGiamGia.getText()));
-        hd.setTriGia(Double.parseDouble(txtPrice.getText()) - Double.parseDouble(txtGiamGia.getText()));
-        hd.setTrangThai(rdoThanhToan.isSelected()?"Đã thanh toán":"Chưa thanh toán");
-        hddao.update(hd);
-        hdctdao.delete(mahd);
-        this.insertCTHD(mahd);
-        this.clearForm();
-        XMsgBox.inform(null, "In hóa đơn thành công.");
-    }
-
-    @Override
-    public void xuatBillKhachHang() {
-        // chờ xét duyệt mới có code nhé //    
-    }
-
 }

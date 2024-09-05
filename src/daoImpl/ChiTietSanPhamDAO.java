@@ -2,7 +2,8 @@
 package daoImpl;
 
 
-import daos.ChiTietSanPhamDAO;
+
+import daos.DAOs;
 import entities.ChiTietSanPham;
 import java.util.List;
 import utils.XJdbc;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ChiTietSanPhamImple implements ChiTietSanPhamDAO{
+public class ChiTietSanPhamDAO extends DAOs<ChiTietSanPham,String>{
 
     @Override
     public List<ChiTietSanPham> selectBySql(String sql , Object...values) {
@@ -21,14 +22,14 @@ public class ChiTietSanPhamImple implements ChiTietSanPhamDAO{
             ResultSet rs = (ResultSet) XJdbc.select(sql, values);
             while(rs.next()){
                 ChiTietSanPham ctsp = new ChiTietSanPham ();
-                ctsp.setMaNL(rs.getString("maNl"));
-                ctsp.setMaSP(rs.getString("maSP"));
-                ctsp.setSoLuong(rs.getInt("soluong"));
-                ctsp.setGiaVon(rs.getDouble("giaVon"));
+                ctsp.setMaSP(rs.getString(1));
+                ctsp.setMaNL(rs.getString(2));
+                ctsp.setSoLuong(rs.getInt(3));
+                ctsp.setGiaVon(rs.getDouble(4));
                 list.add(ctsp);
             }
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ChiTietSanPhamImple.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ChiTietSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -40,7 +41,8 @@ public class ChiTietSanPhamImple implements ChiTietSanPhamDAO{
     }
 
     @Override
-    public ChiTietSanPham insert(ChiTietSanPham Entity) {
+    public int insert(ChiTietSanPham Entity) {
+        int i = -1;
         String sql = "INSERT INTO CHITIETSANPHAM VALUES (?,?,?,?)";
         Object [] values = {
             Entity.getMaSP(),
@@ -49,21 +51,28 @@ public class ChiTietSanPhamImple implements ChiTietSanPhamDAO{
             Entity.getGiaVon()
         };
         try {
-            XJdbc.IUD(sql,values);
+            i = XJdbc.IUD(sql,values);
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ChiTietSanPhamImple.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ChiTietSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return Entity;
+        return i;
     }
 
     @Override
-    public List<ChiTietSanPham> selectAllNguyenLieu(String maSP) {
+    public ChiTietSanPham selectByID(String maNL) {
+        String sql = "SELECT * FROM CHITIETSANPHAM WHERE MANL = ? ";
+        List <ChiTietSanPham> list = this.selectBySql(sql, maNL);
+        return !list.isEmpty()?list.get(0):null;
+    }
+    
+    public List<ChiTietSanPham> selectAllApplianceForPro(String maSP) {
         String sql = " SELECT * FROM CHITIETSANPHAM WHERE MASP = ? ";
         return this.selectBySql(sql,maSP);
     }
     
     @Override
-    public ChiTietSanPham update(ChiTietSanPham Entity){
+    public int update(ChiTietSanPham Entity){
+        int i = -1;
         String sql = "Update from CHITIETSANPHAM set soLuong = ? , giaVon = ? where masp = ?";
         Object [] values = {
             Entity.getSoLuong(),
@@ -71,22 +80,23 @@ public class ChiTietSanPhamImple implements ChiTietSanPhamDAO{
             Entity.getMaSP()
         };
         try {
-            XJdbc.IUD(sql, values);
+            i = XJdbc.IUD(sql, values);
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ChiTietSanPhamImple.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ChiTietSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return Entity;
+        return i;
     }
-    
 
     @Override
-    public void detele(String masp) {
+    public int delete(String maSP) {
+        int i = -1;
         String sql = " DELETE FROM CHITIETSANPHAM WHERE MASP = ? ";
         try {
-            XJdbc.IUD(sql, masp);
+            i = XJdbc.IUD(sql, maSP);
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ChiTietSanPhamImple.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ChiTietSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return i;
     }
     
 }

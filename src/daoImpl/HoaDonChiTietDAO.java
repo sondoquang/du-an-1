@@ -1,17 +1,17 @@
 
 package daoImpl;
 
+import daos.DAOs;
 import entities.HoaDonChiTiet;
 import java.util.ArrayList;
 import java.util.List;
 import utils.XJdbc;
 import java.sql.ResultSet;
-import daos.HoaDonChiTietDAO;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HoaDonChiTietImple implements HoaDonChiTietDAO {
+public class HoaDonChiTietDAO extends DAOs <HoaDonChiTiet,String> {
 
     @Override
     public List<HoaDonChiTiet> selectBySql(String sql, Object... values) {
@@ -20,17 +20,17 @@ public class HoaDonChiTietImple implements HoaDonChiTietDAO {
             ResultSet rs = (ResultSet) XJdbc.select(sql, values);
             while(rs.next()){
                 HoaDonChiTiet hdct = new HoaDonChiTiet();
-                hdct.setMaHD(rs.getString("mahd"));
-                hdct.setMaSP(rs.getString("masp"));
-                hdct.setSoLuong(rs.getInt("SoLuong"));
-                hdct.setDonGia(rs.getDouble("giaTien"));
-                hdct.setKhuyenMai(rs.getDouble("khuyenMai"));
-                hdct.setThanhTien(rs.getDouble("Thanhtien"));
-                hdct.setGhiChu(rs.getString("ghichu"));
+                hdct.setMaHD(rs.getString(1));
+                hdct.setMaSP(rs.getString(2));
+                hdct.setSoLuong(rs.getInt(3));
+                hdct.setDonGia(rs.getDouble(4));
+                hdct.setKhuyenMai(rs.getDouble(5));
+                hdct.setThanhTien(rs.getDouble(6));
+                hdct.setGhiChu(rs.getString(7));
                 list.add(hdct);
             } 
         } catch (ClassNotFoundException | SQLException e) {
-            Logger.getLogger(HoaDonChiTietImple.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(HoaDonChiTietDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return list;
     }
@@ -42,18 +42,24 @@ public class HoaDonChiTietImple implements HoaDonChiTietDAO {
     }
 
     @Override
-    public List<HoaDonChiTiet> selectByID(String maHD) {
+    public HoaDonChiTiet selectByID(String maHD) {
         String sql = " SELECT * FROM HOADONCHITIET WHERE MAHD = ? ";
-        return this.selectBySql(sql, maHD);
+        List <HoaDonChiTiet> list = this.selectBySql(sql,maHD);
+        return list.isEmpty()?list.get(0):null;
     }
     
-    public List<HoaDonChiTiet> selectByMaSP(String maSP){
-        String sql = " SELECT * FROM HOADONCHITIET WHERE MASP = ? ";
+    public List<HoaDonChiTiet> selectByIDs(String maSP, int maTK){
+        String sql = "";
+        if(maTK == 0)
+            sql += " SELECT * FROM HOADONCHITIET WHERE MASP = ? ";
+        else
+            sql += " SELECT * FROM HOADONCHITIET WHERE MAHD = ? ";
         return this.selectBySql(sql, maSP);
     }
 
     @Override
-    public void insertCTHoaDon(HoaDonChiTiet entity) {
+    public int insert(HoaDonChiTiet entity) {
+        int i = -1;
         String sql = " INSERT INTO HOADONCHITIET values (?,?,?,?,?,?,?)";
         Object [] values = {
             entity.getMaHD(),
@@ -65,19 +71,27 @@ public class HoaDonChiTietImple implements HoaDonChiTietDAO {
             entity.getGhiChu()
         };
         try {
-            XJdbc.IUD(sql, values);
+            i = XJdbc.IUD(sql, values);
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(HoaDonChiTietImple.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HoaDonChiTietDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return i;
     }
 
     @Override
-    public void delete(String mahd) {
+    public int delete(String maHD) {
+        int i = -1;
         String sql = "DELETE FROM HOADONCHITIET WHERE MAHD = ?";
         try {
-            XJdbc.IUD(sql,mahd);
+            i = XJdbc.IUD(sql,maHD);
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(HoaDonChiTietImple.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HoaDonChiTietDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return i;
+    }
+
+    @Override
+    public int update(HoaDonChiTiet e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

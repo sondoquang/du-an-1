@@ -1,6 +1,6 @@
 package daoimpl;
 
-import daos.SanPhamDAO;
+import daos.DAOs;
 import entities.SanPham;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.XJdbc;
 
-public class SanPhamImple implements SanPhamDAO {
+public class SanPhamDAO extends DAOs<SanPham, String> {
 
     @Override
-    public List<SanPham> selectBySQl(String sql, Object... agrs) {
+    public List<SanPham> selectBySql(String sql, Object... agrs) {
         List<SanPham> list = new ArrayList<>();
         try {
             ResultSet rs = (ResultSet) XJdbc.select(sql, agrs);
@@ -33,20 +33,31 @@ public class SanPhamImple implements SanPhamDAO {
     }
 
     @Override
-    public SanPham getItemsByMaSP(String MaSP) {
+    public List<SanPham> selectAll() {
+        String sql = "SELECT * FROM SANPHAM ";
+        return this.selectBySql(sql);
+    }
+
+    @Override
+    public SanPham selectByID(String MaSP) {
         String sql = " SELECT * FROM SanPham WHERE MASP = ?";
-        List<SanPham> list = this.selectBySQl(sql, MaSP);
+        List<SanPham> list = this.selectBySql(sql, MaSP);
         return !list.isEmpty() ? list.get(0) : null;
     }
 
-    @Override
-    public List<SanPham> getItems(String LOAISP) {
-        String sql = " SELECT * FROM SanPham WHERE LOAISP LIKE ?";
-        return this.selectBySQl(sql, "%" + LOAISP + "%");
+    public List<SanPham> selectByIDs(String val, int maTK) {
+        String sql = "";
+        if (maTK == 0) {
+            sql += " SELECT * FROM SanPham WHERE LOAISP LIKE ?";
+        } else {
+            sql += " SELECT * FROM SanPham WHERE TENSANPHAM LIKE ? ";
+        }
+        return this.selectBySql(sql, "%" + val + "%");
     }
 
     @Override
-    public void insertSanPham(SanPham Entity) {
+    public int insert(SanPham Entity) {
+        int i = - 1;
         String sql = " INSERT INTO SanPham (LOAISP,TENSANPHAM,GIATIEN,HINH) VALUES (? ,? ,? ,?)";
         Object[] values = {
             Entity.getLoaiSP(),
@@ -55,26 +66,16 @@ public class SanPhamImple implements SanPhamDAO {
             Entity.getHinh()
         };
         try {
-            XJdbc.IUD(sql, values);
+            i = XJdbc.IUD(sql, values);
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(SanPhamImple.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return i;
     }
 
     @Override
-    public List<SanPham> getItemsByID(String tensp) {
-        String sql = " SELECT * FROM SanPham WHERE TENSANPHAM LIKE ? ";
-        return this.selectBySQl(sql, "%" + tensp + "%");
-    }
-
-    @Override
-    public String createMaSP() {
-        String sql = " EXEC SP_TAOMASP ";
-        return XJdbc.getValue(sql);
-    }
-
-    @Override
-    public SanPham update(SanPham Entity) {
+    public int update(SanPham Entity) {
+        int i = -1;
         String Sql = "UPDATE SANPHAM SET LOAISP = ? , TENSANPHAM = ? , GIATIEN = ? , HINH = ? WHERE MASP = ? ";
         Object[] values = {
             Entity.getLoaiSP(),
@@ -84,20 +85,27 @@ public class SanPhamImple implements SanPhamDAO {
             Entity.getMaSP()
         };
         try {
-            XJdbc.IUD(Sql, values);
+            i = XJdbc.IUD(Sql, values);
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(SanPhamImple.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return Entity;
+        return i;
     }
 
     @Override
-    public void delete(String maSP) {
-        String sql ="DELETE FROM SANPHAM WHERE MASP = ? ";
+    public int delete(String maSP) {
+        int i = -1;
+        String sql = "DELETE FROM SANPHAM WHERE MASP = ? ";
         try {
-            XJdbc.IUD(sql, maSP);
+            i = XJdbc.IUD(sql, maSP);
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(SanPhamImple.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return i;
+    }
+
+    public String createMaSP() {
+        String sql = " EXEC SP_TAOMASP ";
+        return XJdbc.getValue(sql);
     }
 }

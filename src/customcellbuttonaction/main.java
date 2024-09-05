@@ -17,7 +17,7 @@ public class main extends javax.swing.JFrame {
 
         };
         table.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
-        table.getColumnModel().getColumn(3).setCellEditor(new TableActionCelllEditor(event));
+        table.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(event));
     }
 
     /**

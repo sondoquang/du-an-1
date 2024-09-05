@@ -2,11 +2,10 @@
 package views;
 
 import controller.KhachHangController;
-import daoImpl.HoaDonImple;
-import daoImpl.KhachHangImple;
+import daoImpl.HoaDonDAO;
+import daoImpl.KhachHangDAO;
 import entities.HoaDon;
 import entities.KhachHang;
-import java.sql.SQLException;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import utils.XMsgBox;
@@ -17,12 +16,12 @@ public class SaveOderCustomerJDialog extends javax.swing.JDialog implements Khac
     
     public static String makh;
     public static String mahd;
-    KhachHangImple khdao = new KhachHangImple();
-    HoaDonImple hddao = new HoaDonImple();
-    public SaveOderCustomerJDialog(java.awt.Frame parent, boolean modal, String sdt) {
+    KhachHangDAO khdao = new KhachHangDAO();
+    HoaDonDAO hddao = new HoaDonDAO();
+    public SaveOderCustomerJDialog(java.awt.Frame parent, boolean modal, String soDT) {
         super(parent, modal);
         initComponents();
-        this.initialize(sdt);
+        this.initialize(soDT);
     }
 
     
@@ -459,7 +458,7 @@ public class SaveOderCustomerJDialog extends javax.swing.JDialog implements Khac
         DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
         model.setRowCount(0);
         try {
-            List<KhachHang> list = khdao.selectByID(values, maTK);
+            List<KhachHang> list = khdao.selectByIDs(values, maTK);
             for(KhachHang kh:list){
                 Object [] row= {
                     kh.getMaKH(),
@@ -500,7 +499,7 @@ public class SaveOderCustomerJDialog extends javax.swing.JDialog implements Khac
         DefaultTableModel model  = (DefaultTableModel) tblHoaDon.getModel();
         model.setRowCount(0);
         try {
-            List<HoaDon> list = hddao.selectByID(MaKH);
+            List<HoaDon> list = hddao.selectByID1(MaKH);
             for(HoaDon hd: list){
                 Object [] row1  ={
                     hd.getMaHD(),
@@ -537,15 +536,15 @@ public class SaveOderCustomerJDialog extends javax.swing.JDialog implements Khac
             XMsgBox.alert(this, "Tên không đúng tiêu chuẩn.");
         } else {
             if(XValidate.phoneNumber(kh.getSDT())){
-                if(khdao.selectBySDT(kh.getSDT()) == null){
+                if(khdao.selectByIDs(kh.getSDT(),0) == null){
                     try {
-                        khdao.insertCustomer(kh);
+                        khdao.insert(kh);
                         makh = txtMaKH.getText();
                         this.resetForm();
                         this.fillTableCustomer("", 1);
                         XMsgBox.alert(this, "Thêm khách hàng thành công.");
                         this.dispose();
-                    } catch (ClassNotFoundException | SQLException e) {
+                    } catch (Exception e) {
                         XMsgBox.alert(this, "Thêm khách hàng thất bại !!");
                     }
                 }else{
@@ -567,13 +566,13 @@ public class SaveOderCustomerJDialog extends javax.swing.JDialog implements Khac
             XMsgBox.alert(this, "Tên không đúng tiêu chuẩn.");
         } else {
             if(XValidate.phoneNumber(kh.getSDT())){
-                if(khdao.selectBySDT(kh.getSDT()) == null){
+                if(khdao.selectByIDs(kh.getSDT(),0) == null){
                     try {
-                        khdao.UpdateInfoCustomer(kh);
+                        khdao.update(kh);
                         this.resetForm();
                         this.fillTableCustomer("", 1);
                         XMsgBox.alert(this, "Cập nhật khách hàng thành công.");
-                    } catch (ClassNotFoundException | SQLException e) {
+                    } catch (Exception e) {
                         XMsgBox.alert(this, "Cập nhật khách hàng thất bại !!");
                     }
                 }else{
@@ -588,11 +587,11 @@ public class SaveOderCustomerJDialog extends javax.swing.JDialog implements Khac
     @Override
     public void deleteCustomer(String makh) {
         try {
-            khdao.deleteCustomer(makh);
+            khdao.delete(makh);
             this.resetForm();
             this.fillTableCustomer("", 1);
             XMsgBox.alert(this, "Xóa khách hàng thành công.");
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (Exception e) {
             XMsgBox.alert(this, "Xóa khách hàng thất bại !!");
         }
     }

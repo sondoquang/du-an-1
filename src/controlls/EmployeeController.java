@@ -2,7 +2,7 @@
 package controlls;
 
 import daoImpl.NhanVienDAO;
-import daoImpl.HoaDonImple;
+import daoImpl.HoaDonDAO;
 import entities.NhanVien;
 import java.awt.Image;
 import java.io.File;
@@ -30,7 +30,7 @@ public class EmployeeController {
 
     public static int curr = -1;
     private static final NhanVienDAO dao = new NhanVienDAO();
-    private static final HoaDonImple hddao = new HoaDonImple();
+    private static final HoaDonDAO hddao = new HoaDonDAO();
     public static JFrame frame;
     public static JTable table;
     public static JTextField txtManv;

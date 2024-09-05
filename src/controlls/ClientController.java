@@ -1,6 +1,6 @@
 package controlls;
 
-import daoImpl.HoaDonImple;
+import daoImpl.HoaDonDAO;
 import daoImpl.KhachHangDAO;
 import entities.HoaDon;
 import entities.KhachHang;
@@ -110,7 +110,7 @@ public class ClientController {
         }
     }
 
-    HoaDonImple hddao = new HoaDonImple();
+    HoaDonDAO hddao = new HoaDonDAO();
 
     public static void delete() {
         String maKH = txtMaKH.getText();

@@ -1,4 +1,3 @@
-
 package daoImpl;
 
 import daos.DAOs;
@@ -10,7 +9,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.XJdbc;
-
 
 public class KhachHangDAO extends DAOs<KhachHang, String> {
 
@@ -38,35 +36,27 @@ public class KhachHangDAO extends DAOs<KhachHang, String> {
 //        XJdbc.update(sql, MaKH);
 //    }
     @Override
-    public List<KhachHang> selectAll() {
-        String sql = "SELECT * FROM KhachHang";
-        return selectBySql(sql);
-    }
-
-    @Override
     public List<KhachHang> selectBySql(String sql, Object... args) {
         List<KhachHang> list = new ArrayList<>();
         try {
-            ResultSet rs = null;
-            try {
-                rs = (ResultSet) XJdbc.select(sql, args);
-                while (rs.next()) {
-                    KhachHang entity = new KhachHang();
-                    entity.setMaKH(rs.getString(1));
-                    entity.setHoVaTen(rs.getString(2));
-                    entity.setSDT(rs.getString(3));
-                    list.add(entity);
-                }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                rs.getStatement().close();
+            ResultSet rs = (ResultSet) XJdbc.select(sql, args);
+            while (rs.next()) {
+                KhachHang entity = new KhachHang();
+                entity.setMaKH(rs.getString(1));
+                entity.setHoVaTen(rs.getString(2));
+                entity.setSDT(rs.getString(3));
+                list.add(entity);
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex);
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    @Override
+    public List<KhachHang> selectAll() {
+        String sql = "SELECT * FROM KhachHang";
+        return selectBySql(sql);
     }
 
     @Override
@@ -118,15 +108,26 @@ public class KhachHangDAO extends DAOs<KhachHang, String> {
         }
         return i;
     }
-     
-    public String createIDCustomer(){
-        String sql  = " EXEC SP_TAOMAKH ";
+    
+    public List<KhachHang> selectByIDs(String values, int maTK) {
+        String sql;
+        if (maTK == 0) {
+            sql = " SELECT * FROM KHACHHANG WHERE SDT LIKE ? ";
+        } else {
+            sql = " SELECT * FROM KHACHHANG WHERE HOVATEN LIKE ?";
+        }
+        values = "%" + values + "%";
+        return selectBySql(sql, values);
+    }
+
+    public String createIDCustomer() {
+        String sql = " EXEC SP_TAOMAKH ";
         return XJdbc.getValue(sql);
     }
-    
-    public KhachHang checkPhoneNumber(String SDT){
+
+    public KhachHang checkPhoneNumber(String SDT) {
         String sql = "SELECT * FROM KHACHHANG WHERE SDT = ? ";
         List<KhachHang> list = this.selectBySql(sql, SDT);
-        return list.size() > 0 ?list.get(0): null;
+        return !list.isEmpty()? list.get(0) : null;
     }
 }

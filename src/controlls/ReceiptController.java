@@ -1,15 +1,14 @@
 
 package controlls;
 
-import daoImpl.HoaDonChiTietImple;
-import daoImpl.HoaDonImple;
-import daoImpl.KhachHangImple;
-import daoimpl.SanPhamImple;
+import daoImpl.HoaDonChiTietDAO;
+import daoImpl.HoaDonDAO;
+import daoImpl.KhachHangDAO;
+import daoimpl.SanPhamDAO;
 import entities.HoaDon;
 import entities.HoaDonChiTiet;
 import entities.KhachHang;
 import entities.SanPham;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,10 +23,10 @@ import utils.XTable;
 
 public class ReceiptController {
 
-    private static final HoaDonImple hddao = new HoaDonImple();
-    private static final HoaDonChiTietImple hdctdao = new HoaDonChiTietImple();
-    private static final SanPhamImple spdao = new SanPhamImple();
-    private static final KhachHangImple khdao = new KhachHangImple();
+    private static final HoaDonDAO hddao = new HoaDonDAO();
+    private static final HoaDonChiTietDAO hdctdao = new HoaDonChiTietDAO();
+    private static final SanPhamDAO spdao = new SanPhamDAO();
+    private static final KhachHangDAO khdao = new KhachHangDAO();
 
     public static JFrame frame;
     public static JTable tblHoaDon;
@@ -68,7 +67,7 @@ public class ReceiptController {
             model.setRowCount(0);
             for (HoaDon hd : list) {
                 if (hd.getMaKH() != null) {
-                    kh = khdao.selectByMaKH(hd.getMaKH());
+                    kh = khdao.selectByID(hd.getMaKH());
                 }
                 Object[] row = {
                     hd.getMaHD(),
@@ -90,10 +89,10 @@ public class ReceiptController {
         DefaultTableModel model = (DefaultTableModel) tblCTHoaDon.getModel();
         DefaultTableModel model1 = (DefaultTableModel) tblHoaDon.getModel();
         try {
-            List<HoaDonChiTiet> list = hdctdao.selectByID(model1.getValueAt(tblHoaDon.getSelectedRow(), 0) + "");
+            List<HoaDonChiTiet> list = hdctdao.selectByIDs(model1.getValueAt(tblHoaDon.getSelectedRow(), 0) + "",1);
             model.setRowCount(0);
             for (HoaDonChiTiet hdct : list) {
-                SanPham sp = spdao.getItemsByMaSP(hdct.getMaSP());
+                SanPham sp = (SanPham) spdao.selectByIDs(hdct.getMaSP(),0);
                 Object[] row = {
                     hdct.getMaSP(),
                     sp.getTenSP(),
@@ -141,7 +140,7 @@ public class ReceiptController {
             model.setRowCount(0);
             for (HoaDon hd : list) {
                 if (hd.getMaKH() != null) {
-                    kh = khdao.selectByMaKH(hd.getMaKH());
+                    kh = khdao.selectByID(hd.getMaKH());
                 }
                 Object[] row = {
                     hd.getMaHD(),
@@ -150,7 +149,7 @@ public class ReceiptController {
                     hd.getTriGia(),
                     hd.getGiamGia(),
                     hd.getNgayMua(),
-                    hd.getTrangThai().equals("Đã thanh toán") == true?true:false
+                    hd.getTrangThai().equals("Đã thanh toán")== true?true:false
                 };
                 model.addRow(row);
             }

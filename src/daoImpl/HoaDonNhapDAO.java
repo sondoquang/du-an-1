@@ -1,7 +1,7 @@
 
 package daoImpl;
 
-import daos.HoaDonNhapDAO;
+import daos.DAOs;
 import entities.HoaDonNhap;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import utils.XJdbc;
 
 
-public class HoaDonNhapImple implements HoaDonNhapDAO{
+public class HoaDonNhapDAO extends DAOs<HoaDonNhap,String>{
 
     @Override
     public List<HoaDonNhap> selectBySql(String sql, Object... values) {
@@ -45,14 +45,12 @@ public class HoaDonNhapImple implements HoaDonNhapDAO{
         return list.size()>0 ? list.get(0): null;
     }
 
-    @Override
     public String createIdHDNhap() {
         String sql = "EXEC SP_TAOIDHDNHAP";
         return XJdbc.getValue(sql);
     }
-
     @Override
-    public HoaDonNhap insert(HoaDonNhap Entity) {
+    public int insert(HoaDonNhap Entity) {
         String sql= "INSERT INTO HDNHAP VALUES(?,?,?)";
         Object [] values = {
             Entity.getSoHD(),
@@ -62,10 +60,20 @@ public class HoaDonNhapImple implements HoaDonNhapDAO{
         try {
             XJdbc.IUD(sql, values);
         } catch (SQLException ex) {
-            Logger.getLogger(HoaDonNhapImple.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HoaDonNhapDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(HoaDonNhapImple.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HoaDonNhapDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return Entity;
+        return 1;
+    }
+
+    @Override
+    public int update(HoaDonNhap e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public int delete(String key) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

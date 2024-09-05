@@ -1,9 +1,9 @@
 
 package controlls;
 
-import daoImpl.NguyenLieuDao;
-import daoImpl.HoaDonNhapImple;
-import daoImpl.CTHDNhapImple;
+import daoImpl.NguyenLieuDAO;
+import daoImpl.HoaDonNhapDAO;
+import daoImpl.ChiTietHoaDonNhapDAO;
 import entities.ChiTietHDNhap;
 import entities.HoaDonNhap;
 import entities.INFOHDXUAT;
@@ -32,9 +32,9 @@ import utils.XTable;
 public class ApplianceController {
 
     private static int curr = -1;
-    private static final NguyenLieuDao dao = new NguyenLieuDao();
-    private static final HoaDonNhapImple hdndao = new HoaDonNhapImple();
-    private static final CTHDNhapImple cthdndao = new CTHDNhapImple();
+    private static final NguyenLieuDAO dao = new NguyenLieuDAO();
+    private static final HoaDonNhapDAO hdndao = new HoaDonNhapDAO();
+    private static final ChiTietHoaDonNhapDAO cthdndao = new ChiTietHoaDonNhapDAO();
     public static JFrame frame;
     public static JTable tblNL_SP;
     public static JTextField txtmasp_KH;

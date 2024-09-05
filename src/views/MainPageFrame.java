@@ -8,8 +8,9 @@ import controlls.HomeController;
 import controlls.ProductController;
 import controlls.ProfileController;
 import controlls.ReceiptController;
-import daoImpl.HoaDonImple;
-import daoImpl.HoaDonNhapImple;
+import controlls.SellController;
+import daoImpl.HoaDonDAO;
+import daoImpl.HoaDonNhapDAO;
 import daoImpl.ThongKeImple;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -2536,8 +2537,8 @@ public class MainPageFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDoiMKActionPerformed
 
     private void btnDeleteClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteClientActionPerformed
-        HoaDonImple hddao = new HoaDonImple();
-        if(hddao.selectByID(txtMaKH.getText()).isEmpty()){
+        HoaDonDAO hddao = new HoaDonDAO();
+        if(hddao.selectByID1(txtMaKH.getText()).isEmpty()){
             runController(() -> {
                 ClientController.delete();
             });
@@ -2589,7 +2590,7 @@ public class MainPageFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThemNvActionPerformed
 
     private void btnthem_SPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthem_SPActionPerformed
-        HoaDonNhapImple hdndao = new HoaDonNhapImple();
+        HoaDonNhapDAO hdndao = new HoaDonNhapDAO();
         String maHDN = hdndao.createIdHDNhap();
         runController(() -> {
             ApplianceController.insertAdd(maHDN);
@@ -2669,11 +2670,7 @@ public class MainPageFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_Prof_lblHinhMouseClicked
 
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
-        if (evt.getClickCount() == 2) {
-            runController(() -> {
-                ProductController.chuyenTrang();
-            });
-        }
+
     }//GEN-LAST:event_tblSanPhamMouseClicked
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
@@ -2761,7 +2758,7 @@ public class MainPageFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRefreshClientActionPerformed
 
     private void btnThemNLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNLActionPerformed
-        HoaDonNhapImple hdndao = new HoaDonNhapImple();
+        HoaDonNhapDAO hdndao = new HoaDonNhapDAO();
         String maHDN = hdndao.createIdHDNhap();
         runController(() -> {
             ApplianceController.insert(maHDN);

@@ -4,8 +4,8 @@ package controlls;
 import customcellbuttonaction.TableActionCellEditor;
 import customcellbuttonaction.TableActionCellRender;
 import customcellbuttonaction.TableActionEvent;
-import daoImpl.HoaDonChiTietImple;
-import daoimpl.SanPhamImple;
+import daoImpl.HoaDonChiTietDAO;
+import daoimpl.SanPhamDAO;
 import entities.SanPham;
 import java.util.List;
 import javax.swing.JFrame;
@@ -30,8 +30,8 @@ public class ProductController {
         tblSanPham = ProductController.tblSanPham;
     }
 
-    private static final SanPhamImple spdao = new SanPhamImple();
-    private static final HoaDonChiTietImple hdctdao = new HoaDonChiTietImple();
+    private static final SanPhamDAO spdao = new SanPhamDAO();
+    private static final HoaDonChiTietDAO hdctdao = new HoaDonChiTietDAO();
 
     public static void init() {
         setActionTable();
@@ -56,7 +56,7 @@ public class ProductController {
     public static void fillTableSanPham(String tenSP) {
         DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
         try {
-            List<SanPham> list = spdao.getItemsByID(tenSP);
+            List<SanPham> list = spdao.selectByIDs(tenSP,1);
             model.setRowCount(0);
             for (SanPham sp : list) {
                 Object[] row = {
@@ -74,22 +74,21 @@ public class ProductController {
         }
     }
     
-    public static String masp;
     public static void chuyenTrang() {
         DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
-        masp = model.getValueAt(tblSanPham.getSelectedRow(), 0) + "";
-        new CheBienJDialog(frame, true).setVisible(true);
+        String masp = model.getValueAt(tblSanPham.getSelectedRow(), 0) + "";
+        new CheBienJDialog(frame, true, masp).setVisible(true);
         fillTableSanPham("");
     }
     
     public static void taoSanPhamMoi(){
-        masp = null;
-        new CheBienJDialog(frame, true).setVisible(true);
+        
+        new CheBienJDialog(frame, true,null).setVisible(true);
         fillTableSanPham("");
     }
     
     public static void deleteProduct(String maSP){
-        if(hdctdao.selectByMaSP(maSP).isEmpty()){
+        if(hdctdao.selectByIDs(maSP,0).isEmpty()){
             if(XMsgBox.confirm(frame, "Bạn muốn xóa sản phẩm này chứ ?")){
                 spdao.delete(maSP);
                 fillTableSanPham(maSP);
