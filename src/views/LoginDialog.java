@@ -8,10 +8,10 @@ import utils.XAuth;
 import utils.XMsgBox;
 
 
-public class LoginDialog1 extends javax.swing.JDialog {
+public class LoginDialog extends javax.swing.JDialog {
 
     
-    public LoginDialog1(java.awt.Frame parent, boolean modal) {
+    public LoginDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setTitle("Login!");

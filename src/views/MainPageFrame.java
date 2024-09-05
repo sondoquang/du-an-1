@@ -8,7 +8,6 @@ import controlls.HomeController;
 import controlls.ProductController;
 import controlls.ProfileController;
 import controlls.ReceiptController;
-import controlls.SellController;
 import daoImpl.HoaDonDAO;
 import daoImpl.HoaDonNhapDAO;
 import daoImpl.ThongKeImple;
@@ -47,7 +46,7 @@ public class MainPageFrame extends javax.swing.JFrame {
         if (isFirstLogin) {
             new ChaoJDialog(this, true).setVisible(true);
         }
-        new LoginDialog1(this, true).setVisible(true);
+        new LoginDialog(this, true).setVisible(true);
         initComponents();
         init();
         setUser();
@@ -2766,7 +2765,7 @@ public class MainPageFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThemNLActionPerformed
 
     private void btnBieuDoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBieuDoActionPerformed
-        new ChartJDialog(this, true).setVisible(true);
+        
     }//GEN-LAST:event_btnBieuDoActionPerformed
 
     private void btnInhoadonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInhoadonActionPerformed

@@ -662,12 +662,10 @@ public class CreateOrdersJFrame extends SubController {
 
     private void btnInHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHoaDonActionPerformed
         if(SellController.maHDUD == null) {
-            System.out.println("chạy 1");
             runController(()->{
                 SellController.printBill();
             });
         } else {
-            System.out.println("chạy 2");
             runController(()->{
                 SellController.updateBills();
             });
@@ -676,7 +674,7 @@ public class CreateOrdersJFrame extends SubController {
     }//GEN-LAST:event_btnInHoaDonActionPerformed
 
     private void btnTaoKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoKHActionPerformed
-        new SaveOderCustomerJDialog(this, true, txtSDT.getText()).setVisible(true);
+        new SaveOderCustomerJDialog(this, true, txtSDT.getText(),null).setVisible(true);
         if (SaveOderCustomerJDialog.makh != null)
             runController(()->{
                 SellController.fillCustomerByID(SaveOderCustomerJDialog.makh);
@@ -855,6 +853,7 @@ public class CreateOrdersJFrame extends SubController {
     private void getController() {
         SellController.getComponents(this, btnAll, btnCafe, btnInHoaDon, btnMilkTea, btnTaoKH, btnTea, btnTimKiemKH, btnXoa, btnTimKiem, cboKhachHang, rdoChuaThanhToan, rdoThanhToan, tblOder, txtDiscount, txtGiamGia, txtPrice, txtSDT, txtTienNhan, txtTienThoi, txtTimKiem, pnlMain);
     }
+    
     private void runController(Runnable run) {
         initController();
         run.run();

@@ -395,7 +395,7 @@ public class SellController {
         DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
         model.setRowCount(0);
         for (String key : listProOrder.keySet()) {
-            SanPham sp = (SanPham) spdao.selectByIDs(key,0);
+            SanPham sp = spdao.selectByID(key);
             Object[] row = {
                 sp.getMaSP(),
                 sp.getTenSP(),
@@ -525,13 +525,13 @@ public class SellController {
         try {
             DefaultComboBoxModel model = (DefaultComboBoxModel) cboKhachHang.getModel();
             model.removeAllElements();
-            List <KhachHang> list = khdao.selectByIDs(txtSDT.getText(),1);
-            if (list != null) {
+            System.out.println(txtSDT.getText());
+            KhachHang kh = khdao.selectBySDT(txtSDT.getText());
+            if (kh != null) {
                 model.addElement(list.get(0).toString());
             } else {
                 if (XMsgBox.confirm(frame, "Khách hàng mới\nBạn có muốn thêm mới khách hàng ?")) {
-                    ProductController.masp = null;
-                    new SaveOderCustomerJDialog(frame, true, txtSDT.getText()).setVisible(true);
+                    new SaveOderCustomerJDialog(frame, true, txtSDT.getText(),null).setVisible(true);
                     if (SaveOderCustomerJDialog.makh != null) {
                         fillCustomerByID(SaveOderCustomerJDialog.makh);
                     }

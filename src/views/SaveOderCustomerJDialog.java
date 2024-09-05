@@ -18,10 +18,10 @@ public class SaveOderCustomerJDialog extends javax.swing.JDialog implements Khac
     public static String mahd;
     KhachHangDAO khdao = new KhachHangDAO();
     HoaDonDAO hddao = new HoaDonDAO();
-    public SaveOderCustomerJDialog(java.awt.Frame parent, boolean modal, String soDT) {
+    public SaveOderCustomerJDialog(java.awt.Frame parent, boolean modal, String soDT , String maKH) {
         super(parent, modal);
         initComponents();
-        this.initialize(soDT);
+        this.initialize(soDT , maKH);
     }
 
     
@@ -441,20 +441,20 @@ public class SaveOderCustomerJDialog extends javax.swing.JDialog implements Khac
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void initialize(String sdt) {
+    public void initialize(String soDT , String maKH) {
         this.setLocationRelativeTo(this);
         this.setTitle("Khách hàng");
         this.fillTableCustomer("", 1);
         this.fillTableBills();
-        if(sdt != null){
-            txtSodt.setText(sdt);
+        if(soDT != null){
+            txtSodt.setText(soDT);
             txtMaKH.setText(khdao.createIDCustomer());
         }
     }
     
     
     @Override
-    public void fillTableCustomer(String values , int maTK) {
+    public void fillTableCustomer(String values ,int maTK) {
         DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
         model.setRowCount(0);
         try {

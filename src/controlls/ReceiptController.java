@@ -92,7 +92,7 @@ public class ReceiptController {
             List<HoaDonChiTiet> list = hdctdao.selectByIDs(model1.getValueAt(tblHoaDon.getSelectedRow(), 0) + "",1);
             model.setRowCount(0);
             for (HoaDonChiTiet hdct : list) {
-                SanPham sp = (SanPham) spdao.selectByIDs(hdct.getMaSP(),0);
+                SanPham sp =  spdao.selectByID(hdct.getMaSP());
                 Object[] row = {
                     hdct.getMaSP(),
                     sp.getTenSP(),

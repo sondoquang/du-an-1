@@ -119,6 +119,12 @@ public class KhachHangDAO extends DAOs<KhachHang, String> {
         values = "%" + values + "%";
         return selectBySql(sql, values);
     }
+    
+    public KhachHang selectBySDT(String soDT){
+        String sql = " SELECT * FROM KHACHHANG WHERE SDT LIKE ? ";
+        List<KhachHang> list = this.selectBySql(sql,soDT);
+        return list.isEmpty()?null:list.get(0);
+    }
 
     public String createIDCustomer() {
         String sql = " EXEC SP_TAOMAKH ";

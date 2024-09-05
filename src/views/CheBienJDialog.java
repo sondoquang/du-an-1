@@ -9,7 +9,6 @@ import javax.swing.table.DefaultTableModel;
 import utils.XImage;
 import utils.XMsgBox;
 import controller.NguyenLieuController;
-import controlls.ProductController;
 import daoImpl.ChiTietSanPhamDAO;
 import daoImpl.NguyenLieuDAO;
 import daoimpl.SanPhamDAO;
