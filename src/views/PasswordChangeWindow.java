@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package views;
 
 import daoImpl.NhanVienDAO;
 import entities.NhanVien;
-import java.awt.CardLayout;
 import utils.XAuth;
 import javax.swing.JLabel;
 import javax.swing.event.DocumentEvent;
@@ -14,10 +10,6 @@ import javax.swing.event.DocumentListener;
 import utils.EntityController;
 import utils.XMsgBox;
 
-/**
- *
- * @author ndhlt
- */
 public class PasswordChangeWindow extends EntityController<NhanVien> {
 
     private final NhanVienDAO dao = new NhanVienDAO();
@@ -25,9 +17,6 @@ public class PasswordChangeWindow extends EntityController<NhanVien> {
     private String New;
     private String Confirm;
 
-    /**
-     * Creates new form PasswordChange
-     */
     public PasswordChangeWindow() {
         initComponents();
         this.setTitle("Đổi mật khẩu");
@@ -241,7 +230,7 @@ public class PasswordChangeWindow extends EntityController<NhanVien> {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(confirmErr, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 100, Short.MAX_VALUE))
+                                .addGap(0, 132, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(16, 16, 16)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -423,7 +412,6 @@ public class PasswordChangeWindow extends EntityController<NhanVien> {
         if (checkInput()) {
             temp.setMatKhau(New);
             return temp;
-            
         }
         return null;
     }

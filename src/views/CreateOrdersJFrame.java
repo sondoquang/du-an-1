@@ -1,5 +1,6 @@
 package views;
 
+import controlls.ClientController;
 import controlls.ReceiptController;
 import controlls.SellController;
 import java.text.DecimalFormat;
@@ -674,10 +675,10 @@ public class CreateOrdersJFrame extends SubController {
     }//GEN-LAST:event_btnInHoaDonActionPerformed
 
     private void btnTaoKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoKHActionPerformed
-        new SaveOderCustomerJDialog(this, true, txtSDT.getText(),null).setVisible(true);
-        if (SaveOderCustomerJDialog.makh != null)
+        new SaveOderCustomerJDialog(this, true).setVisible(true);
+        if (ClientController.makh != null)
             runController(()->{
-                SellController.fillCustomerByID(SaveOderCustomerJDialog.makh);
+                SellController.fillCustomerByID(ClientController.makh);
             });
     }//GEN-LAST:event_btnTaoKHActionPerformed
 

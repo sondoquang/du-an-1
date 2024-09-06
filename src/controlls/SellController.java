@@ -170,7 +170,6 @@ public class SellController {
         updateStatus();
         TableActionEvent event = new TableActionEvent() {
             DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
-
             @Override
             public void onDetete(int row) {
                 if (tblOder.isEditing()) {
@@ -520,7 +519,7 @@ public class SellController {
             }
         }
     }
-
+    public static String soDT = null;
     public static void searchCustomer() {
         try {
             DefaultComboBoxModel model = (DefaultComboBoxModel) cboKhachHang.getModel();
@@ -531,9 +530,10 @@ public class SellController {
                 model.addElement(list.get(0).toString());
             } else {
                 if (XMsgBox.confirm(frame, "Khách hàng mới\nBạn có muốn thêm mới khách hàng ?")) {
-                    new SaveOderCustomerJDialog(frame, true, txtSDT.getText(),null).setVisible(true);
-                    if (SaveOderCustomerJDialog.makh != null) {
-                        fillCustomerByID(SaveOderCustomerJDialog.makh);
+                    soDT = txtSDT.getText();
+                    new SaveOderCustomerJDialog(frame, true).setVisible(true);
+                    if (ClientController.makh != null) {
+                        fillCustomerByID(ClientController.makh);
                     }
                 }
             }

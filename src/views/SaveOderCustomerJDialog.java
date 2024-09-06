@@ -1,30 +1,19 @@
-
 package views;
 
-import controller.KhachHangController;
-import daoImpl.HoaDonDAO;
-import daoImpl.KhachHangDAO;
-import entities.HoaDon;
-import entities.KhachHang;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
-import utils.XMsgBox;
-import utils.XValidate;
+
+import controlls.ClientController;
+import utils.SubController;
 
 
-public class SaveOderCustomerJDialog extends javax.swing.JDialog implements KhachHangController{
-    
-    public static String makh;
-    public static String mahd;
-    KhachHangDAO khdao = new KhachHangDAO();
-    HoaDonDAO hddao = new HoaDonDAO();
-    public SaveOderCustomerJDialog(java.awt.Frame parent, boolean modal, String soDT , String maKH) {
-        super(parent, modal);
+public class SaveOderCustomerJDialog extends SubController {
+
+    public SaveOderCustomerJDialog(java.awt.Frame parent, boolean modal) {
         initComponents();
-        this.initialize(soDT , maKH);
+        runController(() -> {
+            ClientController.init();
+        });
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -331,51 +320,62 @@ public class SaveOderCustomerJDialog extends javax.swing.JDialog implements Khac
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtSodtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSodtKeyReleased
-        String searchString = txtSodt.getText();
-        this.fillTableCustomer(searchString, 0);
+        runController(() -> {
+            ClientController.fillTableCustomer(txtSodt.getText(), 0);
+        });
     }//GEN-LAST:event_txtSodtKeyReleased
 
     private void txtMaKHKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMaKHKeyReleased
-        String searchString = txtMaKH.getText();
-        this.fillTableCustomer(searchString, 0);
+        runController(() -> {
+            ClientController.fillTableCustomer(txtMaKH.getText(), 0);
+        });
     }//GEN-LAST:event_txtMaKHKeyReleased
 
     private void txtTenKHKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenKHKeyReleased
-        String searchString = txtTenKH.getText();
-        this.fillTableCustomer(searchString, 2);
+        runController(() -> {
+            ClientController.fillTableCustomer(txtTenKH.getText(), 2);
+        });
     }//GEN-LAST:event_txtTenKHKeyReleased
 
     private void tblKhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhachHangMouseClicked
-        if(evt.getClickCount() == 1){
-            this.fillInfoCustomer();
-        }else{
-            DefaultTableModel model = (DefaultTableModel)tblKhachHang.getModel();
-            this.makh = model.getValueAt(tblKhachHang.getSelectedRow(), 0)+"";
+        if (evt.getClickCount() == 1) {
+            runController(() -> {
+                ClientController.fillInfoCustomer();
+            });
+        } else {
+            ClientController.makh = tblKhachHang.getModel().getValueAt(tblKhachHang.getSelectedRow(), 0) + "";
             this.setVisible(false);
         }
     }//GEN-LAST:event_tblKhachHangMouseClicked
 
     private void btnThemKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKhachHangActionPerformed
-        this.insertCustomer();
+        runController(() -> {
+            ClientController.insertCustomer();
+        });
     }//GEN-LAST:event_btnThemKhachHangActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        this.updateInfoCustomer();
+        runController(() -> {
+            ClientController.updateInfoCustomer();
+        });
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        this.deleteCustomer(txtMaKH.getText());
+        runController(() -> {
+            ClientController.deleteCustomer(txtMaKH.getText());
+        });        
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        this.resetForm();
+        runController(() -> {
+            ClientController.resetForm();
+        });
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
-       
+
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
-  
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */
 //        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -440,169 +440,17 @@ public class SaveOderCustomerJDialog extends javax.swing.JDialog implements Khac
     private javax.swing.JTextField txtTenKH;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void initialize(String soDT , String maKH) {
-        this.setLocationRelativeTo(this);
-        this.setTitle("Khách hàng");
-        this.fillTableCustomer("", 1);
-        this.fillTableBills();
-        if(soDT != null){
-            txtSodt.setText(soDT);
-            txtMaKH.setText(khdao.createIDCustomer());
-        }
-    }
-    
-    
-    @Override
-    public void fillTableCustomer(String values ,int maTK) {
-        DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
-        model.setRowCount(0);
-        try {
-            List<KhachHang> list = khdao.selectByIDs(values, maTK);
-            for(KhachHang kh:list){
-                Object [] row= {
-                    kh.getMaKH(),
-                    kh.getHoVaTen(),
-                    kh.getSDT()
-                };
-                model.addRow(row);
-            }
-        } catch (Exception e) {
-            XMsgBox.alert(this, "lỗi truy vấn dữ liệu !!");
-        }
-    }
-    
-    
-    @Override
-    public void fillTableBills() {
-        DefaultTableModel model  = (DefaultTableModel) tblHoaDon.getModel();
-        model.setRowCount(0);
-        List<HoaDon> list  = hddao.selectAll();
-        try {
-            for(HoaDon hd: list){
-                Object [] row  ={
-                    hd.getMaHD(),
-                    hd.getMaKH() == null?"Khách vãn lai":hd.getMaKH(),
-                    hd.getMaNV(),
-                    hd.getNgayMua(),
-                    hd.getTriGia()
-                };
-                model.addRow(row);
-            }
-        } catch (Exception e) {
-            XMsgBox.alert(this, "lỗi truy vấn dữ liệu !!");
-        }
+    private void initController() {
+        ClientController.initialize(this, btnReset, btnSua, btnThemKhachHang, btnXoa, tblHoaDon, tblKhachHang, txtMaKH, txtSodt, txtTenKH);
     }
 
-    @Override
-    public void searchBillCustomer(String MaKH) {
-        DefaultTableModel model  = (DefaultTableModel) tblHoaDon.getModel();
-        model.setRowCount(0);
-        try {
-            List<HoaDon> list = hddao.selectByID1(MaKH);
-            for(HoaDon hd: list){
-                Object [] row1  ={
-                    hd.getMaHD(),
-                    hd.getMaKH() == null?"Khách vãn lai":hd.getMaKH(),
-                    hd.getMaNV(),
-                    hd.getNgayMua(),
-                    hd.getTriGia()
-                };
-                model.addRow(row1);
-            }
-        } catch (Exception e) {
-            XMsgBox.alert(this, "Lỗi truy vấn dữ liệu !!");
-        }
+    private void getController() {
+        ClientController.getComponents(this, btnReset, btnSua, btnThemKhachHang, btnXoa, tblHoaDon, tblKhachHang, txtMaKH, txtSodt, txtTenKH);
     }
 
-    @Override
-    public void fillInfoCustomer() {
-        DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
-        String maKH = model.getValueAt(tblKhachHang.getSelectedRow(), 0)+"";
-        String tenKH = model.getValueAt(tblKhachHang.getSelectedRow(), 1)+"";
-        String soDT = model.getValueAt(tblKhachHang.getSelectedRow(), 2)+"";
-        txtSodt.setText(soDT);
-        txtMaKH.setText(maKH);
-        txtTenKH.setText(tenKH);
-        this.searchBillCustomer(maKH);
-    }
-
-    @Override
-    public void insertCustomer() {
-        KhachHang kh = new KhachHang();
-        kh.setHoVaTen(txtTenKH.getText());
-        kh.setSDT(txtSodt.getText());
-        if(XValidate.checkName(kh.getHoVaTen()) != true){
-            XMsgBox.alert(this, "Tên không đúng tiêu chuẩn.");
-        } else {
-            if(XValidate.phoneNumber(kh.getSDT())){
-                if(khdao.selectByIDs(kh.getSDT(),0) == null){
-                    try {
-                        khdao.insert(kh);
-                        makh = txtMaKH.getText();
-                        this.resetForm();
-                        this.fillTableCustomer("", 1);
-                        XMsgBox.alert(this, "Thêm khách hàng thành công.");
-                        this.dispose();
-                    } catch (Exception e) {
-                        XMsgBox.alert(this, "Thêm khách hàng thất bại !!");
-                    }
-                }else{
-                    XMsgBox.alert(this, "Só điện thoại đã tồn tại !!");
-                }
-            }else{
-                XMsgBox.alert(this, "Sai định dạng số điện thoại !!");
-            }
-        }
-    }
-
-    @Override
-    public void updateInfoCustomer() {
-        KhachHang kh = new KhachHang();
-        kh.setMaKH(txtMaKH.getText());
-        kh.setHoVaTen(txtTenKH.getText());
-        kh.setSDT(txtSodt.getText());
-        if(XValidate.checkName(kh.getHoVaTen()) != true){
-            XMsgBox.alert(this, "Tên không đúng tiêu chuẩn.");
-        } else {
-            if(XValidate.phoneNumber(kh.getSDT())){
-                if(khdao.selectByIDs(kh.getSDT(),0) == null){
-                    try {
-                        khdao.update(kh);
-                        this.resetForm();
-                        this.fillTableCustomer("", 1);
-                        XMsgBox.alert(this, "Cập nhật khách hàng thành công.");
-                    } catch (Exception e) {
-                        XMsgBox.alert(this, "Cập nhật khách hàng thất bại !!");
-                    }
-                }else{
-                    XMsgBox.alert(this, "Só điện thoại đã tồn tại !!");
-                }
-            }else{
-                XMsgBox.alert(this, "Sai định dạng số điện thoại !!");
-            }
-        }
-    }
-
-    @Override
-    public void deleteCustomer(String makh) {
-        try {
-            khdao.delete(makh);
-            this.resetForm();
-            this.fillTableCustomer("", 1);
-            XMsgBox.alert(this, "Xóa khách hàng thành công.");
-        } catch (Exception e) {
-            XMsgBox.alert(this, "Xóa khách hàng thất bại !!");
-        }
-    }
-
-    @Override
-    public void resetForm() {
-        txtSodt.setText("");
-        txtTenKH.setText("");
-        txtMaKH.setText(khdao.createIDCustomer());
-        txtSodt.requestFocus();
-        this.fillTableBills();
-        this.fillTableCustomer("", 1);
+    private void runController(Runnable run) {
+        initController();
+        run.run();
+        getController();
     }
 }

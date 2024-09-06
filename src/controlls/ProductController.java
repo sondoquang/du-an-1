@@ -1,9 +1,9 @@
-
 package controlls;
 
 import customcellbuttonaction.TableActionCellEditor;
 import customcellbuttonaction.TableActionCellRender;
 import customcellbuttonaction.TableActionEvent;
+import daoImpl.ChiTietSanPhamDAO;
 import daoImpl.HoaDonChiTietDAO;
 import daoimpl.SanPhamDAO;
 import entities.SanPham;
@@ -19,29 +19,33 @@ public class ProductController {
 
     private static JFrame frame;
     private static JTable tblSanPham;
+    private static final ChiTietSanPhamDAO ctspdao = new ChiTietSanPhamDAO();
+    private static final SanPhamDAO spdao = new SanPhamDAO();
+    private static final HoaDonChiTietDAO hdctdao = new HoaDonChiTietDAO();
+    public static String maSPUD = null;
 
     public static void initialize(JFrame frame, JTable tblSanPham) {
         ProductController.frame = frame;
         ProductController.tblSanPham = tblSanPham;
     }
-    
+
     public static void getComponents(JFrame frame, JTable tblSanPham) {
         frame = ProductController.frame;
         tblSanPham = ProductController.tblSanPham;
     }
 
-    private static final SanPhamDAO spdao = new SanPhamDAO();
-    private static final HoaDonChiTietDAO hdctdao = new HoaDonChiTietDAO();
-
     public static void init() {
         setActionTable();
         fillTableSanPham("");
     }
-    
-    public static void setActionTable(){
+
+    public static void setActionTable() {
         TableActionEvent actionEvent = new TableActionEvent() {
             @Override
             public void onDetete(int row) {
+                if (tblSanPham.isEditing()) {
+                    tblSanPham.getCellEditor().stopCellEditing();
+                }
                 deleteProduct((String) tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 0));
             }
 
@@ -53,10 +57,11 @@ public class ProductController {
         tblSanPham.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
         tblSanPham.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(actionEvent));
     }
+
     public static void fillTableSanPham(String tenSP) {
         DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
         try {
-            List<SanPham> list = spdao.selectByIDs(tenSP,1);
+            List<SanPham> list = spdao.selectByIDs(tenSP, 1);
             model.setRowCount(0);
             for (SanPham sp : list) {
                 Object[] row = {
@@ -73,29 +78,29 @@ public class ProductController {
             XMsgBox.alert(frame, "Lỗi truy vấn dữ liệu !!");
         }
     }
-    
+
     public static void chuyenTrang() {
         DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
-        String masp = model.getValueAt(tblSanPham.getSelectedRow(), 0) + "";
-        new CheBienJDialog(frame, true, masp).setVisible(true);
+        maSPUD = model.getValueAt(tblSanPham.getSelectedRow(), 0) + "";
+        new CheBienJDialog(frame, true).setVisible(true);
         fillTableSanPham("");
     }
-    
-    public static void taoSanPhamMoi(){
-        
-        new CheBienJDialog(frame, true,null).setVisible(true);
+
+    public static void taoSanPhamMoi() {
+        new CheBienJDialog(frame, true).setVisible(true);
         fillTableSanPham("");
     }
-    
-    public static void deleteProduct(String maSP){
-        if(hdctdao.selectByIDs(maSP,0).isEmpty()){
-            if(XMsgBox.confirm(frame, "Bạn muốn xóa sản phẩm này chứ ?")){
+
+    public static void deleteProduct(String maSP) {
+        if (hdctdao.selectByIDs(maSP, 0).isEmpty()) {
+            if (XMsgBox.confirm(frame, "Bạn muốn xóa sản phẩm này chứ ?")) {
+                ctspdao.delete(maSP);
                 spdao.delete(maSP);
-                fillTableSanPham(maSP);
+                fillTableSanPham("");
                 XMsgBox.inform(frame, "Xóa sản phẩm thành công.");
             }
-        }else{
-            XMsgBox.inform(frame,"Không thể xóa sản phẩm này !");
+        } else {
+            XMsgBox.inform(frame, "Không thể xóa sản phẩm này !");
         }
     }
 }

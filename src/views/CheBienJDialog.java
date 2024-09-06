@@ -1,32 +1,18 @@
 package views;
 
-import entities.NguyenLieu;
-import java.io.File;
-import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.table.DefaultTableModel;
-import utils.XImage;
 import utils.XMsgBox;
-import controller.NguyenLieuController;
-import daoImpl.ChiTietSanPhamDAO;
-import daoImpl.NguyenLieuDAO;
-import daoimpl.SanPhamDAO;
-import entities.ChiTietSanPham;
-import entities.SanPham;
+import controlls.ProcessController;
+import controlls.ProductController;
+import utils.SubController;
 import utils.XAuth;
-import utils.XTable;
-import utils.XValidate;
 
-public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuController {
-    NguyenLieuDAO nldao = new NguyenLieuDAO();
-    ChiTietSanPhamDAO ctspdao = new ChiTietSanPhamDAO();
-    String maSPUD;
-    public CheBienJDialog(java.awt.Frame parent, boolean modal, String maSPUD) {
-        super(parent, modal);
+public class CheBienJDialog extends SubController {
+
+    public CheBienJDialog(java.awt.Frame parent, boolean modal) {
         initComponents();
-        this.maSPUD = maSPUD;
-        this.initialize();
+        runController(() -> {
+            ProcessController.init();
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -64,6 +50,11 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
         txtSearch = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jSplitPane1.setDividerLocation(750);
         jSplitPane1.setDividerSize(15);
@@ -128,6 +119,7 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
 
         txtGiaVon.setEditable(false);
         txtGiaVon.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txtGiaVon.setText("0");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -394,12 +386,16 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImageMouseClicked
-        this.setImageProduct();
+        runController(() -> {
+            ProcessController.setImageProduct();
+        });
     }//GEN-LAST:event_lblImageMouseClicked
 
     private void tblNguyenLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNguyenLieuMouseClicked
-        if(XAuth.isAdmin())
-        this.chonSoLuong();
+        if (XAuth.isAdmin())
+            runController(() -> {
+                ProcessController.chonSoLuong();
+            });
     }//GEN-LAST:event_tblNguyenLieuMouseClicked
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
@@ -407,16 +403,22 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
     }//GEN-LAST:event_txtSearchKeyReleased
 
     private void tblThanhPhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThanhPhanMouseClicked
-        if(XAuth.isAdmin()) 
-            this.checkSLThanhPhan();
+        if (XAuth.isAdmin())
+            runController(() -> {
+                ProcessController.checkSLThanhPhan();
+            });
     }//GEN-LAST:event_tblThanhPhanMouseClicked
 
     private void txtSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyPressed
-        this.searchNL();
+        runController(() -> {
+            ProcessController.searchNL();
+        });
     }//GEN-LAST:event_txtSearchKeyPressed
 
     private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetActionPerformed
-        this.resetForm();
+        runController(() -> {
+            ProcessController.resetForm();
+        });
     }//GEN-LAST:event_btnresetActionPerformed
 
     private void jScrollPane3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane3MouseClicked
@@ -424,20 +426,28 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
     }//GEN-LAST:event_jScrollPane3MouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        if(checkEmpty()){
-            this.update();
-        }else{
+        if (ProcessController.checkEmpty()) {
+            runController(() -> {
+                ProcessController.update();
+            });
+        } else {
             XMsgBox.inform(this, "Vui lòng không được để trống thông tin !!");
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnThemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPActionPerformed
-        if(checkEmpty()){
-            this.insertSanPham();
-        }else{
+        if (ProcessController.checkEmpty()) {
+            runController(() -> {
+                ProcessController.insertSanPham();
+            });
+        } else {
             XMsgBox.inform(this, "Vui lòng không được để trống thông tin !!");
         }
     }//GEN-LAST:event_btnThemSPActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        ProductController.maSPUD = null;
+    }//GEN-LAST:event_formWindowClosing
 
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */
@@ -510,300 +520,17 @@ public class CheBienJDialog extends javax.swing.JDialog implements NguyenLieuCon
     private javax.swing.JTextField txtTenSP;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void initialize() {
-        this.setLocationRelativeTo(this);
-        this.setTitle("Chế Biến");
-        this.fillTableNguyenLieu();
-        txtMaSP.setText(spdao.createMaSP());
-        if(maSPUD != null){
-            this.setForm();
-        }
-        this.updateStatus();
+    private void initController() {
+        ProcessController.initialize(this, btnThemSP, btnUpdate, btnreset, cboLoaiSP, lblImage, txtGiaBan, txtGiaVon, txtMaSP, txtSearch, txtTenSP, tblNguyenLieu, tblThanhPhan);
     }
 
-    @Override
-    public void fillTableNguyenLieu() {
-        DefaultTableModel model = (DefaultTableModel) tblNguyenLieu.getModel();
-        try {
-            List<NguyenLieu> list = nldao.selectAll();
-            model.setRowCount(0);
-            for (NguyenLieu nl : list) {
-                Object[] row = {
-                    nl.getMaNL(),
-                    nl.getTenNL(),
-                    nl.getHinh()
-                };
-                model.addRow(row);
-            }
-            XTable.insertImage(tblNguyenLieu, 2, 100, 100, "IngriImages");
-        } catch (Exception e) {
-            XMsgBox.alert(this, "Lỗi truy vấn dữ liệu !!");
-        }
+    private void getController() {
+        ProcessController.getComponents(this, btnThemSP, btnUpdate, btnreset, cboLoaiSP, lblImage, txtGiaBan, txtGiaVon, txtMaSP, txtSearch, txtTenSP, tblNguyenLieu, tblThanhPhan);
     }
 
-    @Override
-    public void setImageProduct() {
-        JFileChooser chooser = new JFileChooser();
-        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile();
-            XImage.save("ProdImages", file);
-            this.setImage(file.getName());
-        }
-    }
-
-    public void setImage(String nameFile) {
-        try {
-            ImageIcon Icon = XImage.read("ProdImages", nameFile);
-            lblImage.setIcon(XImage.getResized(XImage.read("ProdImages", nameFile), lblImage.getWidth(), lblImage.getHeight()));
-            lblImage.setToolTipText(nameFile);
-        } catch (Exception e) {
-            XMsgBox.alert(this, "Ảnh không có sẵn .");
-        }
-
-    }
-
-    @Override
-    public void fillTableThanhPhan(String maNL, Integer soLuong) {
-        DefaultTableModel model = (DefaultTableModel) tblThanhPhan.getModel();
-        NguyenLieu nl = nldao.selectByID(maNL);
-        Object[] row = {
-            nl.getMaNL(),
-            nl.getTenNL(),
-            soLuong,
-            nl.getDonVi()
-        };
-        model.addRow(row);
-    }
-
-    @Override
-    public void searchNL() {
-        DefaultTableModel model = (DefaultTableModel) tblNguyenLieu.getModel();
-        try {
-            List<NguyenLieu> list = nldao.selectByName(txtSearch.getText());
-            model.setRowCount(0);
-            for (NguyenLieu nl : list) {
-                Object[] row = {
-                    nl.getMaNL(),
-                    nl.getTenNL(),
-                    nl.getHinh()};
-                model.addRow(row);
-            }
-            XTable.insertImage(tblNguyenLieu, 2, 100, 100, "IngriImages");
-        } catch (Exception e) {
-            XMsgBox.alert(this, "Lỗi kết nối database !!");
-        }
-    }
-
-    @Override
-    public void deleteNL() {
-        DefaultTableModel model = (DefaultTableModel) tblThanhPhan.getModel();
-        int row = tblThanhPhan.getSelectedRow();
-        if (model.getRowCount() >= 0) {
-            model.removeRow(row);
-        }
-    }
-    SanPhamDAO spdao = new SanPhamDAO();
-    String maSP;
-
-    @Override
-    public void insertSanPham() {
-        DefaultTableModel model = (DefaultTableModel) tblThanhPhan.getModel();
-        maSP = spdao.createMaSP();
-        if (XValidate.number(txtGiaBan.getText())) {
-            if (this.checkGiaban()) {
-                if (txtTenSP.getText() != null && lblImage.getToolTipText() != null) {
-                    if (model.getRowCount() > 0) {
-                        SanPham sp = new SanPham();
-                        sp.setLoaiSP(cboLoaiSP.getSelectedItem() + "");
-                        sp.setTenSP(txtTenSP.getText());
-                        sp.setGiaTien(Double.valueOf(txtGiaBan.getText()));
-                        sp.setHinh(lblImage.getToolTipText());
-                        spdao.insert(sp);
-                        this.insertCTSanPham(maSP);
-                        XMsgBox.alert(this, "Thêm sản phẩm thành công");
-                    } else {
-                        XMsgBox.alert(this, "Thành phần không được để trống !!");
-                    }
-                } else {
-                    XMsgBox.alert(this, "Tên và hình không được để trống !!");
-                }
-            } else {
-                XMsgBox.alert(this, "Giá bán phải lớn hơn giá vốn !!");
-            }
-        } else {
-            XMsgBox.alert(this, "Sai định dạng giá bán !!");
-        }
-    }
-
-    @Override
-    public void insertCTSanPham(String masp) {
-        DefaultTableModel model = (DefaultTableModel) tblThanhPhan.getModel();
-        ChiTietSanPham ctsp = new ChiTietSanPham();
-        for (int i = 0; i < tblThanhPhan.getRowCount(); i++) {
-            NguyenLieu nl = nldao.selectByID(model.getValueAt(i, 0)+"");
-            int soLuong = Integer.parseInt(model.getValueAt(i, 2) + "");
-            ctsp.setMaSP(masp);
-            ctsp.setMaNL(model.getValueAt(i, 0) + "");
-            ctsp.setSoLuong(soLuong);
-            ctsp.setGiaVon(nl.getMinGia()*soLuong);
-            ctspdao.insert(ctsp);
-        }
-        this.resetForm();
-    }
-
-    @Override
-    public void resetForm() {
-        DefaultTableModel model = (DefaultTableModel) tblThanhPhan.getModel();
-        txtTenSP.setText("");
-        txtGiaBan.setText("");
-        lblImage.setIcon(null);
-        lblImage.setToolTipText("");
-        txtGiaVon.setText("");
-        txtMaSP.setText(spdao.createMaSP());
-        btnThemSP.setEnabled(true);
-        updateStatus();
-        model.setRowCount(0);
-    }
-
-    public void chonSoLuong() {
-        DefaultTableModel model = (DefaultTableModel) tblNguyenLieu.getModel();
-        Integer soLuong;
-        String sl = XMsgBox.prompt(this, "Nhập số lượng");
-        if (XValidate.positiveInt(sl) == true && !sl.equals("0")) {
-            soLuong = Integer.valueOf(sl);
-            String manl  = model.getValueAt(tblNguyenLieu.getSelectedRow(), 0)+"";
-            if(this.checkIndexProduct(manl) == -1){
-                 this.fillTableThanhPhan(model.getValueAt(tblNguyenLieu.getSelectedRow(), 0) + "", soLuong);
-            }else{
-                DefaultTableModel modeltp = (DefaultTableModel) tblThanhPhan.getModel();
-                modeltp.setValueAt(soLuong, this.checkIndexProduct(manl), 2);
-            }
-        } else {
-            XMsgBox.alert(this, "Số lượng phải là nguyên dương !!");
-        }
-        txtGiaVon.setText(this.giaVon()+"");
-    }
-
-    public void checkSLThanhPhan() {
-        DefaultTableModel model = (DefaultTableModel) tblThanhPhan.getModel();
-        Integer soLuong;
-        String sl = XMsgBox.prompt(this, "Nhập số lượng");
-        if (XValidate.positiveInt(sl)) {
-            soLuong = Integer.valueOf(sl);
-            model.setValueAt(soLuong + "", tblThanhPhan.getSelectedRow(), 2);
-            if (soLuong == 0) {
-                model.removeRow(tblThanhPhan.getSelectedRow());
-            }
-        } else {
-            XMsgBox.alert(this, "Số lượng phải là nguyên dương !!");
-        }
-        txtGiaVon.setText(this.giaVon()+"");
-    }
-
-    private Double giaVon() {
-        Double giaVon = 0.0;
-        DefaultTableModel model = (DefaultTableModel) tblThanhPhan.getModel();
-        for (int i = 0; i < tblThanhPhan.getRowCount(); i++) {
-            NguyenLieu nl = nldao.selectByID(model.getValueAt(i, 0) + "");
-            Double minGia = nl.getMinGia();
-            giaVon += minGia * (Integer.valueOf(model.getValueAt(i, 2) + ""));
-        }
-        return giaVon;
-    }
-
-    private boolean checkGiaban() {
-        Double giaBan = Double.valueOf(txtGiaBan.getText());
-        Double giaVon = Double.valueOf(txtGiaVon.getText());
-        return (giaBan - giaVon) > 0;
-    }
-    @Override
-    public void update(){
-        DefaultTableModel model = (DefaultTableModel) tblThanhPhan.getModel();
-        try {
-            SanPham sp = new SanPham();
-            sp.setMaSP(txtMaSP.getText());
-            sp.setTenSP(txtTenSP.getText());
-            sp.setLoaiSP(cboLoaiSP.getSelectedItem()+"");
-            sp.setGiaTien(Double.parseDouble(txtGiaBan.getText()));
-            sp.setHinh(lblImage.getToolTipText());
-            spdao.update(sp);
-            ctspdao.delete(maSPUD);
-            this.insertCTSanPham(maSPUD);
-            XMsgBox.inform(this, "Cập nhật thành công.");
-        } catch (Exception e) {
-            XMsgBox.inform(this, "Cập nhật thất bại.");
-        }
-    }
-    
-    @Override
-    public void setForm(){
-        DefaultTableModel model = (DefaultTableModel) tblThanhPhan.getModel();
-        try {
-            SanPham sp = (SanPham) spdao.selectByID(maSPUD);
-            txtMaSP.setText(sp.getMaSP());
-            txtGiaBan.setText(sp.getGiaTien()+"");
-            txtTenSP.setText(sp.getTenSP());
-            if(sp.getLoaiSP().equals("Trà Sữa")){
-                cboLoaiSP.setSelectedIndex(0);
-            }else if(sp.getLoaiSP().equals("Cà Phê")){
-                cboLoaiSP.setSelectedIndex(1);
-            }else{
-                cboLoaiSP.setSelectedIndex(2);
-            }
-            this.setImage(sp.getHinh());
-            List <ChiTietSanPham> list = ctspdao.selectAllApplianceForPro(maSPUD);
-            for(ChiTietSanPham ctsp: list){
-                NguyenLieu nl = nldao.selectByID(ctsp.getMaNL());
-                Object [] row ={
-                    ctsp.getMaNL(),
-                    nl.getTenNL(),
-                    ctsp.getSoLuong(),
-                    nl.getDonVi()
-                };
-                model.addRow(row);
-            }
-            txtGiaVon.setText(this.giaVon()+"");
-        } catch (Exception e) {
-        }
-    }
-    
-    @Override
-    public boolean checkEmpty(){
-        if(txtGiaBan.getText().equals(""))
-            return false;
-        if(txtTenSP.getText().equals(""))
-            return false;
-        if((cboLoaiSP.getSelectedItem()+"").equals(""))
-            return false;
-        if(lblImage.getToolTipText() == null)
-            return false;
-        return true;
-    }
-    
-    
-    @Override
-    public int checkIndexProduct(String manl){
-        DefaultTableModel model = (DefaultTableModel) tblThanhPhan.getModel();
-        for(int i=0 ; i<model.getRowCount() ; i++){
-            String maNL = model.getValueAt(i, 0)+"";
-            if(manl.equals(maNL))
-                return i;
-        }
-        return -1;
-    }
-    
-    @Override
-    public void updateStatus(){
-        if(!txtMaSP.getText().equals(spdao.createMaSP())){
-            btnThemSP.setEnabled(false);
-        }else{
-            btnUpdate.setEnabled(false);
-        }
-        if(!XAuth.isAdmin()){
-            btnThemSP.setEnabled(false);
-            btnreset.setEnabled(false);
-            btnUpdate.setEnabled(false);
-        }
+    private void runController(Runnable run) {
+        initController();
+        run.run();
+        getController();
     }
 }
