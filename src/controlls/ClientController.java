@@ -63,8 +63,8 @@ public class ClientController {
         fillTableBills();
         if(SellController.soDT != null){
             txtSoDT.setText(SellController.soDT);
-            txtMaKH.setText(dao.createIDCustomer());
         }
+        txtMaKH.setText(dao.createIDCustomer());
     }
     
     

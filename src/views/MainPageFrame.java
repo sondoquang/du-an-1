@@ -2952,10 +2952,7 @@ public class MainPageFrame extends javax.swing.JFrame {
             runController(() -> {
                 ClientController.fillInfoCustomer();
             });
-        } else {
-            ClientController.makh = tblKhachHang.getModel().getValueAt(tblKhachHang.getSelectedRow(), 0) + "";
-            this.setVisible(false);
-        }
+        } 
     }//GEN-LAST:event_tblKhachHangMouseClicked
 
     private void exit() {

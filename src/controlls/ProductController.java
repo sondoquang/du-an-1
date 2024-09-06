@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import utils.XAuth;
 import utils.XMsgBox;
 import utils.XTable;
 import views.CheBienJDialog;
@@ -46,7 +47,10 @@ public class ProductController {
                 if (tblSanPham.isEditing()) {
                     tblSanPham.getCellEditor().stopCellEditing();
                 }
-                deleteProduct((String) tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 0));
+                if(XAuth.isAdmin())
+                    deleteProduct((String) tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 0));
+                else
+                    XMsgBox.confirm(frame,"Bạn chưa được cấp quyền");
             }
 
             @Override

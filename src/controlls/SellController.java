@@ -31,8 +31,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -47,10 +45,8 @@ import javax.swing.table.DefaultTableModel;
 import jpanelrounded.PanelRound;
 import utils.XAuth;
 import utils.XImage;
-import utils.XJdbc;
 import utils.XMsgBox;
 import utils.XValidate;
-import views.CreateOrdersJFrame;
 import views.SaveOderCustomerJDialog;
 
 public class SellController {
@@ -313,15 +309,6 @@ public class SellController {
 
     }
 
-    private static void createBill() {
-        String sql = " EXEC SP_TAOMAHD ";
-        try {
-            XJdbc.select(sql);
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(CreateOrdersJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     private static HoaDonChiTiet getValueHDCT(int address, String mahd) {
         DefaultTableModel model = (DefaultTableModel) tblOder.getModel();
         HoaDonChiTiet hdct = new HoaDonChiTiet();
@@ -524,10 +511,9 @@ public class SellController {
         try {
             DefaultComboBoxModel model = (DefaultComboBoxModel) cboKhachHang.getModel();
             model.removeAllElements();
-            System.out.println(txtSDT.getText());
             KhachHang kh = khdao.selectBySDT(txtSDT.getText());
             if (kh != null) {
-                model.addElement(list.get(0).toString());
+                model.addElement(kh.toString());
             } else {
                 if (XMsgBox.confirm(frame, "Khách hàng mới\nBạn có muốn thêm mới khách hàng ?")) {
                     soDT = txtSDT.getText();

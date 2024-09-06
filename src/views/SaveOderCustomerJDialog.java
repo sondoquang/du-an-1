@@ -2,6 +2,7 @@ package views;
 
 
 import controlls.ClientController;
+import controlls.SellController;
 import utils.SubController;
 
 
@@ -11,6 +12,8 @@ public class SaveOderCustomerJDialog extends SubController {
         initComponents();
         runController(() -> {
             ClientController.init();
+            this.setTitle("Quản lý khách hàng");
+            this.setLocationRelativeTo(this);
         });
     }
 
@@ -42,6 +45,11 @@ public class SaveOderCustomerJDialog extends SubController {
         tblKhachHang = new customjtable.CustomJTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         panelRound1.setBackground(new java.awt.Color(255, 255, 255));
         panelRound1.setLayout(new java.awt.BorderLayout());
@@ -343,7 +351,8 @@ public class SaveOderCustomerJDialog extends SubController {
                 ClientController.fillInfoCustomer();
             });
         } else {
-            ClientController.makh = tblKhachHang.getModel().getValueAt(tblKhachHang.getSelectedRow(), 0) + "";
+            ClientController.makh = (String) tblKhachHang.getModel().getValueAt(tblKhachHang.getSelectedRow(), 0);
+            SellController.fillCustomerByID(ClientController.makh);
             this.setVisible(false);
         }
     }//GEN-LAST:event_tblKhachHangMouseClicked
@@ -375,6 +384,10 @@ public class SaveOderCustomerJDialog extends SubController {
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
 
     }//GEN-LAST:event_tblHoaDonMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
+    }//GEN-LAST:event_formWindowClosing
 
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */

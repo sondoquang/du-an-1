@@ -8,7 +8,7 @@ import java.text.NumberFormat;
 import utils.SubController;
 
 public class CreateOrdersJFrame extends SubController {
-    
+
     public CreateOrdersJFrame(String maHD) {
         initComponents();
         runController(() -> {
@@ -627,47 +627,47 @@ public class CreateOrdersJFrame extends SubController {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCafeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCafeActionPerformed
-        runController(()->{
+        runController(() -> {
             SellController.fillProductDetail("Cà Phê");
         });
     }//GEN-LAST:event_btnCafeActionPerformed
 
     private void btnMilkTeaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMilkTeaActionPerformed
-        runController(()->{
+        runController(() -> {
             SellController.fillProductDetail("Trà sữa");
         });
     }//GEN-LAST:event_btnMilkTeaActionPerformed
 
     private void btnTeaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeaActionPerformed
-        runController(()->{
+        runController(() -> {
             SellController.fillProductDetail("Trà");
         });
     }//GEN-LAST:event_btnTeaActionPerformed
 
     private void btnAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllActionPerformed
-        runController(()->{
+        runController(() -> {
             SellController.fillProductDetail("Trà sữa");
         });
     }//GEN-LAST:event_btnAllActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        runController(()->{
+        runController(() -> {
             SellController.hoanTraNguyenLieu(-1);
             SellController.clearForm();
         });
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void tblOderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOderMouseClicked
-       
+
     }//GEN-LAST:event_tblOderMouseClicked
 
     private void btnInHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHoaDonActionPerformed
-        if(SellController.maHDUD == null) {
-            runController(()->{
+        if (SellController.maHDUD == null) {
+            runController(() -> {
                 SellController.printBill();
             });
         } else {
-            runController(()->{
+            runController(() -> {
                 SellController.updateBills();
             });
         }
@@ -677,7 +677,7 @@ public class CreateOrdersJFrame extends SubController {
     private void btnTaoKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoKHActionPerformed
         new SaveOderCustomerJDialog(this, true).setVisible(true);
         if (ClientController.makh != null)
-            runController(()->{
+            runController(() -> {
                 SellController.fillCustomerByID(ClientController.makh);
             });
     }//GEN-LAST:event_btnTaoKHActionPerformed
@@ -691,7 +691,7 @@ public class CreateOrdersJFrame extends SubController {
     }//GEN-LAST:event_tblOderKeyPressed
 
     private void txtDiscountKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDiscountKeyPressed
-        runController(()->{
+        runController(() -> {
             SellController.txtDiscountKeyPressed();
         });
 
@@ -711,7 +711,7 @@ public class CreateOrdersJFrame extends SubController {
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        runController(()->{
+        runController(() -> {
             SellController.returnNguyenLieu();
             SellController.clearForm();
         });
@@ -730,7 +730,7 @@ public class CreateOrdersJFrame extends SubController {
     }//GEN-LAST:event_txtSDTKeyPressed
 
     private void btnTimKiemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemKHActionPerformed
-        runController(()->{
+        runController(() -> {
             SellController.searchCustomer();
         });
     }//GEN-LAST:event_btnTimKiemKHActionPerformed
@@ -752,7 +752,7 @@ public class CreateOrdersJFrame extends SubController {
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
-        runController(()->{
+        runController(() -> {
             SellController.fillProductDetail(txtTimKiem.getText());
             SellController.eventClickAddProduct();
         });
@@ -854,7 +854,7 @@ public class CreateOrdersJFrame extends SubController {
     private void getController() {
         SellController.getComponents(this, btnAll, btnCafe, btnInHoaDon, btnMilkTea, btnTaoKH, btnTea, btnTimKiemKH, btnXoa, btnTimKiem, cboKhachHang, rdoChuaThanhToan, rdoThanhToan, tblOder, txtDiscount, txtGiamGia, txtPrice, txtSDT, txtTienNhan, txtTienThoi, txtTimKiem, pnlMain);
     }
-    
+
     private void runController(Runnable run) {
         initController();
         run.run();
