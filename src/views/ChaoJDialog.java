@@ -7,9 +7,7 @@ import java.util.logging.Logger;
 import utils.XJdbc;
 
 public class ChaoJDialog extends javax.swing.JDialog {
-    /**
-     * Creates new form WelcomeJDialog
-     */
+    
     public ChaoJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
