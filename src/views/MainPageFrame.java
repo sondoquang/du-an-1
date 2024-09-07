@@ -43,7 +43,7 @@ public class MainPageFrame extends javax.swing.JFrame {
 
     public MainPageFrame(boolean isFirstLogin) {
         if (isFirstLogin) {
-            new ChaoJDialog(this, true).setVisible(true);
+            new WellcomeJDialog(this, true).setVisible(true);
         }
         new LoginDialog(this, true).setVisible(true);
         initComponents();

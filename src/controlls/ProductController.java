@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import utils.XAuth;
 import utils.XMsgBox;
 import utils.XTable;
-import views.CheBienJDialog;
+import views.ProcessJDialog;
 
 public class ProductController {
 
@@ -86,12 +86,12 @@ public class ProductController {
     public static void chuyenTrang() {
         DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
         maSPUD = model.getValueAt(tblSanPham.getSelectedRow(), 0) + "";
-        new CheBienJDialog(frame, true).setVisible(true);
+        new ProcessJDialog(frame, true).setVisible(true);
         fillTableSanPham("");
     }
 
     public static void taoSanPhamMoi() {
-        new CheBienJDialog(frame, true).setVisible(true);
+        new ProcessJDialog(frame, true).setVisible(true);
         fillTableSanPham("");
     }
 

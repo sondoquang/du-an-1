@@ -12,6 +12,7 @@ import entities.SanPham;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JTable;
@@ -34,7 +35,7 @@ public class ReceiptController {
     public static JTextField txtTimHD;
     public static JComboBox cboTime;
     
-    public static Set<Integer> historyClick = new LinkedHashSet<>();
+    public static Set<Integer> historyClick = new TreeSet<>();
 
     public static void initialize(JFrame frame, JTable tblHoaDon, JTable tblCTHoaDon, JTextField txtTimHD, JComboBox cboTime) {
         ReceiptController.frame = frame;
@@ -56,7 +57,7 @@ public class ReceiptController {
         fillTableBills();
         TableColumnModel columnModel = tblHoaDon.getColumnModel();
         columnModel.getColumn(6).setCellRenderer(new XTable.CheckBoxRenderer());
-        columnModel.getColumn(6).setCellEditor(new XTable.checkBoxEditor());
+//        columnModel.getColumn(6).setCellEditor(new XTable.checkBoxEditor());
     }
 
     public static void search() {
@@ -109,6 +110,7 @@ public class ReceiptController {
     
     public static Set<Integer> doClickTable(){
         historyClick.add(tblHoaDon.getSelectedRow());
+        System.out.println(historyClick.size());
         return historyClick;
     }
     
@@ -121,6 +123,7 @@ public class ReceiptController {
             hddao.updateTrangThaiHD(hd);
         }
         historyClick.clear();
+        System.out.println(historyClick.size());
         fillTableBills();
     }
     
